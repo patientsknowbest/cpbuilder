@@ -24,8 +24,7 @@ function App() {
     if ($('#element-option').length > 0) $('#element-option').html('');
     $('.highlighted').removeClass('.highlighted');
 
-    //console.log(dragPosition.current, 'dp');
-
+    //console.log(dragPosition.current);
 
     if (dragPosition.current > 0) {
       //duplicate element
@@ -60,7 +59,6 @@ function App() {
     }
   }
 
-
   const handleAdding = (e) => {
     //console.log('adding started');
   }
@@ -85,33 +83,22 @@ function App() {
 
   const DragLeaveEl = (e, i) => {
     if ($(e.target).closest('.indragitem').hasClass("highlighted")) $(e.target).closest('.indragitem').removeClass('highlighted');
-
   }
 
-
-
   const handleChange = (e) => {
-    // TODO
-    //console.log('change req');
-
-
-
     let _elems = [...elems];
+
 
     //index
     let i = $(e.target).attr('data-index');
+    
     // let el = $(_elems[i]);
     // if(el.length < 2){
-    let el = $('<div/>').append(_elems[i]);
+    let el = $('<div/>').append(_elems[i])
     // }
     //console.log(el, 'elb')
     $('.option-wrapper-inner').map(function () {
-      // //console.log($(this).html(), $(this).find('.contenttxt').val(),el.html()); 
       let elsep = $(this).attr('data-element');
-      //console.log('======================');
-      //console.log('===== ' + elsep + ' =======');
-      //console.log('======================');
-
 
       //should we go with the element or remove it?
       if (!$(this).find('.headerelem input').is(":checked")) {
@@ -122,7 +109,91 @@ function App() {
 
         //set attribs
         $(this).find('.attrib-options .row').map(function () {
-          ////console.log('attr: ', $(this).find('.col-sm-4').text(), ' v:', $(this).find('.dynamicInput').val())
+          //console.log("attribs change");
+          
+          //console.log($(this).find('.col-sm-4').text());
+          if ($(this).find('.col-sm-4').text() == "Psc of input") {
+            let numberOfDynamicBlocks = parseInt($(this).find('.dynamicNumberInput').val(), 10);
+            //console.log(parseInt($(this).find('.dynamicNumberInput').val(), 10));
+            const inputString = _elems[i];
+            const searchSubstring = '<div class="row">';
+            const regex = new RegExp(searchSubstring, 'g');
+            const occurrences = (inputString.match(regex) || []).length;
+
+            
+            var radioButtonHTML = '<div class="row">' + 
+            '  <div class="form-check input-group">' + 
+            '    <input class="form-check-input col-xs-1" type="radio" name="ID/NAME" id="ID/NAME" value="VALUE">' + 
+            '    <label class="form-check-label col-xs-10" for="ID/NAME"> VALUE</label>' + 
+            '  </div>' + 
+            '</div>';
+
+            var checkboxHTML = '<div class="row">' + 
+            '  <div class="form-check col-xs-12 pull-left input-group">' + 
+            '    <input class="form-check-input form-control" type="checkbox" name="ID/NAME" id="ID/NAME" value="VALUE"/>' + 
+            '    <label class="cp_label col-xs-10 pull-right" for="ID/NAME">VALUE</label>' + 
+            '  </div>' + 
+            '</div>';
+
+            
+            let currentInputHTML = '';
+            let closingDivsPosition = 0;
+            let startingBlockPosition = 0;
+            
+            if (inputString.includes('type="checkbox"')) {
+              currentInputHTML = checkboxHTML;
+              closingDivsPosition = -12;
+              startingBlockPosition = 160 + (numberOfDynamicBlocks * 260);
+            } else if (inputString.includes('type="radio"')) {
+              currentInputHTML = radioButtonHTML;
+              closingDivsPosition = -18;
+              startingBlockPosition = 165 + (numberOfDynamicBlocks * 231);
+            };
+
+            if (occurrences < numberOfDynamicBlocks) {
+              var finalCheckBoxHTML = '';
+
+              for (let i = occurrences; i < numberOfDynamicBlocks; i++) {
+                finalCheckBoxHTML = finalCheckBoxHTML + currentInputHTML;
+              }
+              //console.log(occurrences, numberOfDynamicBlocks);
+
+              //console.log(finalCheckBoxHTML);
+
+              const modifiedString = _elems[i].slice(0, closingDivsPosition) + finalCheckBoxHTML + _elems[i].slice(closingDivsPosition);
+              _elems[i] = modifiedString;
+            }
+            if (occurrences > numberOfDynamicBlocks) {
+              const modifiedString = _elems[i].slice(0, startingBlockPosition) + _elems[i].slice(closingDivsPosition);
+              console.log(modifiedString);
+              _elems[i] = modifiedString;
+            }
+            
+            
+            //console.log(_elems[i]);
+            //console.log(elsep);
+            //console.log(el);
+            //console.log(el.find(elsep));
+            
+            // Assuming you have the desired number of checkboxes in a variable called 'numberOfCheckboxes'
+
+            // Generate the HTML code for one checkbox
+
+            
+
+            // Find the container element where the checkboxes will be added
+            //var checkboxesContainer = $('.row .form-check').first().parent().parent();
+            el = $('<div/>').append(_elems[i])
+            //el.append(checkboxHTML)
+            
+
+            // Append the desired number of checkboxes to the container
+            //for (var i = occurrences; i < numberOfDynamicBlocks; i++) {
+            //  checkboxesContainer.append(checkboxHTML);
+            //}
+            
+          }
+          
           el.find(elsep).attr($(this).find('.col-sm-4').text(), $(this).find('.dynamicInput').val())
         });
 
@@ -138,7 +209,6 @@ function App() {
           }
         }
 
-
         //disabled
         if ($(this).find('.isDsc').length > 0) {
           //class
@@ -150,23 +220,6 @@ function App() {
             el.find(elsep).removeAttr('disabled')
           }
         }
-
-        //checked
-        // if ($(this).find('.isCsc').length > 0) {
-        //   //class
-        //   if ($(this).find('.isCsc').is(":checked")) {
-        //     //add required attrib
-        //     //console.log(el.find(elsep).attr('checked'),'before')
-        //     el.find(elsep).attr('checked', 'checked');
-        //     //console.log(el.find(elsep).attr('checked'),'after')
-        //   } else {
-        //     //console.log('change req to disable checkbox')
-        //     //remove required attr
-        //     //console.log(el.find(elsep).attr('checked'),'before')
-        //     el.find(elsep).removeAttr('checked');
-        //     //console.log(el.find(elsep).attr('checked'),'after')
-        //   }
-        // }
 
         //readonly
         if ($(this).find('.isRsc').length > 0) {
@@ -183,8 +236,6 @@ function App() {
 
         //sizes
         if ($(this).find('select').length > 0) {
-
-
           let svl = el.find(elsep)
 
           //class
@@ -193,12 +244,12 @@ function App() {
           if (el.find(elsep).hasClass('form-control-lg')) el.find(elsep).removeClass('form-control-lg');
 
           svl.addClass($(this).find('select').val());
-
-          //console.log(el.find(elsep));
         }
 
         //content
         if ($(this).find('.contenttxt').length > 0) {
+          //console.log("context change");
+          //console.log($(this).find('.contenttxt'));
           el.find(elsep).html($(this).find('.contenttxt').val())
         }
       }
@@ -260,7 +311,6 @@ function App() {
   );
 
   const handleDetails = (e, i) => {
-
     if ($('.highlighted').length > 0) {
       $('.highlighted').each(function () {
         $(this).removeClass('highlighted');
@@ -282,19 +332,29 @@ function App() {
       $e = $(e.target).closest('.indragitem');
     }
 
-
+    let editableNumberOfInput = false;
+    let isLabelPresent = false;
+    let isEditableInputPresent = false;
+    let numberOfInputs = 0;
 
     //create the elemental form
+    $e.children().each(function () {
+      if (this.nodeName.toLowerCase() == "p") {
+        isLabelPresent = true;
+      }
+      if (this.nodeName.toLowerCase() == "input") {
+        isEditableInputPresent = true;
+        numberOfInputs++;
+      }
+
+      if (isLabelPresent && isEditableInputPresent) {
+        editableNumberOfInput = true;
+      }
+      
+    });
+
     $($e).children().each(function () {
-
-      //console.log('item', this);
-
-      // if($(this).hasClass('input-group-text')){
-      //   this = $(this).find('input-group-text');
-      // }else{
-      //   this =
-      // }
-
+      
       //get class list
       if ($(this).hasClass('highlighed')) $(this).removeClass('highlighed');
       let cls = '';
@@ -316,92 +376,59 @@ function App() {
       //text
       if (!(this.nodeName.toLowerCase() == "input" || this.nodeName.toLowerCase() == "textarea")) {
         headerelem.append('<div class="row optionrow"><div class="col-md-1"><div className="form-check form-switch"><input className="form-check-input switchelem" type="checkbox" checked role="switch" /></div></div><div class="col-md-10"><h6><span class="badge bg-secondary">' + this.nodeName + '</span></h6></div></div>');
-        nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">content : </div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput contenttxt" type="text" value="' + $(this).html() + '"></div></div>')
+        if (this.nodeName.toLowerCase() != "hr" && this.nodeName.toLowerCase() != "img" && this.nodeName.toLowerCase() != "iframe") {
+          nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">content : </div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput contenttxt" type="text" value="' + $(this).html() + '"></div></div>')
+        }
       } else {
 
         headerelem.append('<div class="row optionrow"><div class="col-md-1"><div className="form-check form-switch"><input className="form-check-input switchelem" type="checkbox" checked role="switch" disabled /></div></div><div class="col-md-10"><h6><span class="badge bg-secondary">' + this.nodeName + '</span></h6></div></div>');
-        if (this.nodeName.toLowerCase() == "input") {
-
-          let t = $(this).attr('type');
-
-          //last steps
-          if (!(t == 'color' || t == 'checkbox' || t == 'radio' || t == 'range')) {
-
-
-            //input size
-            let sel1, sel2, sel3 = "";
-            if ($(this).hasClass('form-control-sm')) sel1 = "selected";
-            else if ($(this).hasClass('form-control-lg')) sel2 = "selected";
-            else sel3 = "selected";
-            let input_selector = '<select class="form-select  form-select-sm" aria-label="Default select example"><option value="form-control form-control-sm"' + sel1 + '>Small</option><option value="form-control"' + sel3 + '>Regular</option><option value="form-control form-control-lg"' + sel2 + '>Large</option></select>';
-            nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">content : </div><div class="col-sm-8">' + input_selector + '</div></div>');
-
-            //readonly
-            let rch = '';
-            if ($(this).attr('readonly')) rch = 'checked';
-
-            nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Readonly : </div><div class="col-sm-8"><input class="form-check-input isRsc" type="checkbox"  ' + rch + '></div></div>');
-
-
-
-          }
-
-          //checked
-          //TODO : unanle to remove checked afterwards!
-          // if(t == 'checkbox' || t == 'radio'){
-          //   let cchh = '';
-          //   if ($(this).attr('checked')) cchh = 'checked';
-
-          //   nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Checked : </div><div class="col-sm-8"><input class="form-check-input isCsc" type="checkbox"  ' + cchh + '></div></div>');
-          // }
-
-          //reuired 
-          let ch = '';
-          if ($(this).attr('required')) ch = 'checked';
-
-          nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Required : </div><div class="col-sm-8"><input class="form-check-input isReq" type="checkbox"  ' + ch + '></div></div>');
-
-          //disabled
-          let dch = '';
-          if ($(this).attr('disabled')) dch = 'checked';
-
-          nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Disabled : </div><div class="col-sm-8"><input class="form-check-input isDsc" type="checkbox"  ' + dch + '></div></div>');
-
-
-        }
-        if (this.nodeName.toLowerCase() == "textarea") {
-          //reqd
-          let chh = '';
-          if ($(this).attr('required')) chh = 'checked';
-
-          nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Required : </div><div class="col-sm-8"><input class="form-check-input isReq" type="checkbox"  ' + chh + '></div></div>');
-
-          //disabled
-          let dch = '';
-          if ($(this).attr('disabled')) dch = 'checked';
-
-          nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Disabled : </div><div class="col-sm-8"><input class="form-check-input isDsc" type="checkbox"  ' + dch + '></div></div>');
-
-          //readonly
-          let rch = '';
-          if ($(this).attr('readonly')) rch = 'checked';
-
-          nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Readonly : </div><div class="col-sm-8"><input class="form-check-input isRsc" type="checkbox"  ' + rch + '></div></div>');
-        }
+      
+        // These section are good to add node specific edit opportunities. Like below to a textarea we can add a flag if it's required or not.
+        if (this.nodeName.toLowerCase() == "textarea") {}
       }
       htm.append(headerelem);
       htm.append(nonattrib);
 
       let ham = $('<div class="attrib-options"></div>');
+
+      
+      if (this.nodeName.toLowerCase() == "p" && editableNumberOfInput) {
+        //console.log(this);
+        //console.log(numberOfInputs);
+        ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">Psc of input</div><div class="col-sm-8"><input style="line-height: 30px; display: block; width: 50%; overflow-wrap: break-word; word-wrap: break-word;" class="form-control form-control-sm dynamicNumberInput" type="number" value="' + numberOfInputs + '" min="1"></div></div>')
+      }
+
+      if (this.nodeName.toLowerCase() == "hr") {
+        
+        $.each(this.attributes, function () {
+          if (this.specified) {
+            if (this.name == 'style') {
+              ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input style="line-height: 45px; display: block; width: 100%; overflow-wrap: break-word; word-wrap: break-word;" class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
+                //console.log(this.ownerElement.style.height);
+                //console.log(this.ownerElement.style.backgroundColor);
+                // for (let styleElement of this.ownerElement.style) {
+                //   if (styleElement == 'height') {
+                //     ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput" type="text" value="' + this.ownerElement.style.height + '"></div></div>')
+                //   }
+                // }
+            }
+          }
+        });
+      }
+
       //attribs
       $.each(this.attributes, function () {
         // this.attributes is not a plain object, but an array
         // of attribute nodes, which contain both the name and value
         if (this.specified) {
-          // //console.log(this.name, this.value);
-          if (this.name != 'checked') {
-            ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
-
+          //console.log(this.name, this.value);
+          
+          // NOTE: here we add extra editable options to the UI, but for now we'd not need editing class, style etc. attributes
+          if (this.name != 'checked' && this.name != 'class' && this.name != 'rows' && this.name != 'style' && this.name != 'type' && this.name != 'allowfullscreen') {
+            //console.log(this.value);  
+            if (this.name != 'placeholder' || this.value == 'PLACEHOLDER') {
+              ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
+            }
           }
         }
       });
@@ -409,9 +436,13 @@ function App() {
       htm.append(ham);
       htm.append('<hr/>')
 
+      if (this.nodeName.toLowerCase() == "a") {
+        htm = $('<h4 style="margin-top: 15px; margin-left: 5px;">No editing possible</h4>');
+        ham = '';
+      }
+      
       outer.append(htm);
     })
-
 
     setTimeout(function () {
       $('.option_input, .rele, .appl').attr('data-index', i);
@@ -448,34 +479,53 @@ function App() {
         node.appendChild(textNode);
       }
     }
-
     return node;
   }
 
   const genHtml = (elem) => {
     let _elems = [...elem];
     _elems = _elems.map(function (a) {
-      return '<div class="form-group">' + a + '</div>'
+      const inputString = a.toString();
+      const updatedString = inputString.replace(/input-group/g, "");
+      return updatedString
     })
     return process(_elems.join(' \n'));
   }
 
-  // const [htmlelems, setHtmlElems] = useState([]);
+  let carePlanElements = [
+    // Text input
+    '<div class="row" style="margin-top: 15px;"><div class="col-sm-6 input-group"><label class="cp_label" for="ID/NAME">LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;"><input type="text" name="ID/NAME" id="ID/NAME" class="form-control" style="width: 100%;" placeholder="PLACEHOLDER"/><span class="help-block">HELP TEXT</span></div></div>',
+    
+    // Text area input
+    '<div class="row" style="margin-top: 15px;"><div class="col-sm-12 input-group"><label class="cp_label" for="ID/NAME">LABEL</label><textarea class="form-control" name="ID/NAME" id="ID/NAME" rows="3" style="width: 100%;"></textarea></div></div>',
+    
+    // Date input
+    '<div class="row" style="margin-top: 15px;"><div class="col-sm-6 input-group"><label class="cp_label" for="ID/NAME">LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;"><input type="date" name="ID/NAME" id="ID/NAME" class="form-control" placeholder="dd/mm/yyyy"/><span class="help-block">HELP TEXT</span></div></div>',
+    
+    // Image element
+    '<img src="LOCATION" alt="ALT TEXT" style="max-width: 720px; width: 100%; height: auto; margin-top: 15px;"></img>',
+    
+    // Return to top button
+    '<a href="#top" class="btn arrow btn-primary" title="Back to Top" alt="Click here to return to the Table of Contents" style="margin-top:15px; margin-bottom:15px;">Back to Top</a>',
 
-  let inputelems = ['<label for=\'exampleEmailInput\' class="form-label">Email address</label><input type="email" id=\'exampleEmailInput\' value="" class="form-control" aria-describedby="emailHelp" placeholder=\'\' /><div id="emailHelp" class="form-text">We\'ll never share your email with anyone else.</div>', '<label for="exampleInputPassword1" class="form-label">Password</label><input type="password" value="" class="form-control" aria-describedby="passwordHelp" id="exampleInputPassword1" /><div id="passwordHelp" class="form-text">Should be at least 8 charachters.</div>', '<label for="exampleFormControlTextarea1" class="form-label">Example textarea</label><textarea value=" " class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>']
+    // Goto save button
+    '<a href="#fileUploadForm_save" class="btn arrow btn-primary" title="Back to Top" alt="Click here to save the Care Plan" style="margin-top:15px; margin-bottom:15px;">Go to Save Care Plan</a>',
+    
+    // Horizontal line separator
+    '<hr class="cp_separator" style="height: 5px; background-color: black; margin-top: 5px; margin-bottom: 5px;"/>',
 
+    // Responsive video embed
+    '<div class="embed-responsive embed-responsive-16by9 input-group" style="margin-top: 15.0px;margin-bottom: 15.0px;"><iframe allowfullscreen="true" class="embed-responsive-item" src="SOURCE URL"></iframe></div>',
 
-  let headeerlems = ['<h1>HTML Form h1</h1>', '<h2>HTML Form h2</h2>', '<h3>HTML Form h3</h3>', '<h4>HTML Form h4</h4>', '<h5>HTML Form h5</h5>', '<h6>HTML Form h6</h6>', '<label>My Label</label>'];
-
-  let checboxandradio = ['<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">  Default checkbox</label>', '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"><label class="form-check-label" for="flexRadioDefault1">Default radio</label>'];
-
-  let otherelems = [, '<label for="formFile" class="form-label">Default file input example</label><input class="form-control" type="file" id="formFile">', '<label for="exampleColorInput" class="form-label">Color picker</label><input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">', '<label for="customRange1" class="form-label">Example range</label><input type="range" class="form-range"  min="0" max="5" step="0.5" id="customRange1">',];
-
-
-  let inputgroups = ['<div class="input-group mb-3"><span class="input-group-text" id="basic-addon1">@</span><input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"></div>', '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Recipient\'s username" aria-label="Recipient\'s username" aria-describedby="basic-addon2"><span class="input-group-text" id="basic-addon2">@example.com</span></div>', '<div class="input-group mb-3">  <span class="input-group-text gr-1">$</span> <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"><span class="input-group-text gr-2">.00</span></div>', '<div class="input-group mb-3"><input type="text" class="form-control gr-1" placeholder="Username" aria-label="Username"><span class="input-group-text">@</span><input type="text" class="form-control gr-2" placeholder="Server" aria-label="Server"></div>', '<div class="input-group"><span class="input-group-text">With textarea</span><textarea class="form-control" aria-label="With textarea"></textarea></div>', '<div class="input-group"><span class="input-group-text">First and last name</span><input type="text" aria-label="First name" class="form-control gr-1"><input type="text" aria-label="Last name" class="form-control gr-2"></div>', '<div class="input-group mb-3">  <input type="text" class="form-control" placeholder="Recipient\'s username" aria-label="Recipient\'s username" aria-describedby="button-addon2">  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button></div>', '<div class="input-group mb-3"><button class="btn btn-outline-secondary gr-1" type="button">Button</button><button class="btn btn-outline-secondary gr-2" type="button">Button</button><input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons"></div>', '<div class="input-group">  <input type="text" class="form-control" placeholder="Recipient\'s username" aria-label="Recipient\'s username with two button addons">  <button class="btn btn-outline-secondary gr-1" type="button">Button</button>  <button class="btn btn-outline-secondary gr-2" type="button">Button</button></div>'];
-
-  let floatingelems = ['<div class="form-floating mb-3"><input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"><label for="floatingInput">Email address</label></div>', '<div class="form-floating"> <input type="password" class="form-control" id="floatingPassword" placeholder="Password"><label for="floatingPassword">Password</label></div>', '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea><label for="floatingTextarea2">Comments</label></div>'];
-
+    // Radio inputs
+    '<div class="row" style="margin-top: 15px;"><div class="col-sm-6 input-group"><p class="cp_label">LABEL</p></div><div class="col-sm-6" style="margin-top: 15px;"><div><div class="row"><div class="form-check input-group"><input class="form-check-input col-xs-1" type="radio" name="ID/NAME" id="ID/NAME" value="VALUE"><label class="form-check-label col-xs-10" for="ID/NAME"> VALUE</label></input></div></div><div class="row"><div class="form-check input-group"><input class="form-check-input col-xs-1" type="radio" name="ID/NAME" id="ID/NAME" value="VALUE"><label class="form-check-label col-xs-10" for="ID/NAME"> VALUE</label></input></div></div></div></div></div>',
+    
+    // Checkbox inputs
+    '<div class="row" style="margin-top: 15px;"><div class="col-sm-6 input-group"><p class="cp_label">LABEL</p></div><div class="col-sm-6" style="margin-top: 15px;"><div class="row"><div class="form-check col-xs-12 pull-left input-group"><input class="form-check-input form-control" type="checkbox" name="ID/NAME" id="ID/NAME" value="VALUE"/><label class="cp_label col-xs-10 pull-right" for="ID/NAME">VALUE</label></div></div><div class="row"><div class="form-check col-xs-12 pull-left input-group"><input class="form-check-input form-control" type="checkbox" name="ID/NAME" id="ID/NAME" value="VALUE"/><label class="cp_label col-xs-10 pull-right" for="ID/NAME">VALUE</label></div></div></div></div>',
+    
+    // Select inputs
+    '<div class="row" style="margin-top: 15px;"><div class="col-sm-6 input-group"><label class="cp_label" for="ID/NAME">LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;"><select class="form-control input-group" name="ID/NAME" id="ID/NAME"><option value="--">Select</option><option value="VALUE">VALUE</option><option value="VALUE">VALUE</option></select></div></div>'
+  ]
 
   return (
     <>
@@ -486,9 +536,9 @@ function App() {
           <div
             className='dustbin'
             onDragEnter={(e) => {
+              //console.log(dragPosition.current);
               dragPosition.current = -1;
               if (!$(e.target).hasClass('dustact')) $(e.target).addClass('dustact')
-              //$(e.target).text("Drop it.. i am hungry...");
             }}
             onDragLeave={(e) => { if ($(e.target).hasClass('dustact')) $(e.target).removeClass('dustact'); }}
 
@@ -505,152 +555,26 @@ function App() {
                   <button className="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Elements</button>
                 </li>
                 <li className="nav-item" role="presentation">
-                  <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">HTML Code</button>
+                  <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Care Plan HTML Code</button>
                 </li>
+                {/* Care Plan renderer -> the rendered care plan will be visible just as it would look like on our site 
                 <li className="nav-item" role="presentation">
-                  <button className="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">About</button>
+                  <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Care Plan Renderer</button>
                 </li>
+                */}
+
               </ul>
               <div className="tab-content" id="pills-tabContent">
-                <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                  <div class="card maxh2">
-                    <div class="">
+                <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabIndex="0">
+                  <div className="card maxh2">
+                    <div className="">
                       <div className="accordion accordion-flush" id="accordionFlushExample">
                         <div className="accordion-item inputaccord">
-                          <h2 className="accordion-header" id="flush-headingOne">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
-                              Input Elements
-                            </button>
-                          </h2>
-                          <div id="flush-collapseOne" className="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                          
+                          <div id="flush-collapseOne" className="" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                             <div className="accordion-body">
                               {
-                                inputelems && inputelems.map(function (xe, i) {
-                                  return (
-                                    <div
-                                      className='input-text-add dragdropper'
-                                      draggable="true"
-                                      onDragStart={(e) => handleAdding(e)}
-                                      onDragEnd={(e) => addDragElem(e)}
-                                      key={i}>
-                                      {Parser(xe)}
-                                    </div>
-                                  )
-                                })
-                              }
-                            </div>
-                          </div>
-                        </div>
-                        <div className="accordion-item headeraccord">
-                          <h2 className="accordion-header" id="flush-headingTwo">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                              Header/ Label Elements
-                            </button>
-                          </h2>
-                          <div id="flush-collapseTwo" className="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                            <div className="accordion-body">
-                              {
-                                headeerlems && headeerlems.map(function (xe, i) {
-                                  return (
-                                    <div
-                                      className='input-text-add dragdropper'
-                                      draggable="true"
-                                      onDragStart={(e) => handleAdding(e)}
-                                      onDragEnd={(e) => addDragElem(e)}
-                                      key={i}>
-                                      {Parser(xe)}
-                                    </div>
-                                  )
-                                })
-                              }
-                            </div>
-                          </div>
-                        </div>
-                        <div className="accordion-item checkboxradioaccord">
-                          <h2 className="accordion-header" id="flush-headingFour">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                              Checkbox / Radio
-                            </button>
-                          </h2>
-                          <div id="flush-collapseFour" className="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                            <div className="accordion-body">
-                              {
-                                checboxandradio && checboxandradio.map(function (xe, i) {
-                                  return (
-                                    <div
-                                      className='input-text-add dragdropper'
-                                      draggable="true"
-                                      onDragStart={(e) => handleAdding(e)}
-                                      onDragEnd={(e) => addDragElem(e)}
-                                      key={i}>
-                                      {Parser(xe)}
-                                    </div>
-                                  )
-                                })
-                              }
-                            </div>
-                          </div>
-                        </div>
-                        <div className="accordion-item inputgroupsaccord">
-                          <h2 className="accordion-header" id="flush-headingFour">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
-                              Input Groups
-                            </button>
-                          </h2>
-                          <div id="flush-collapseSix" className="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-                            <div className="accordion-body">
-                              {
-                                inputgroups && inputgroups.map(function (xe, i) {
-                                  return (
-                                    <div
-                                      className='input-text-add dragdropper'
-                                      draggable="true"
-                                      onDragStart={(e) => handleAdding(e)}
-                                      onDragEnd={(e) => addDragElem(e)}
-                                      key={i}>
-                                      {Parser(xe)}
-                                    </div>
-                                  )
-                                })
-                              }
-                            </div>
-                          </div>
-                        </div>
-                        <div className="accordion-item inputgroupsaccord">
-                          <h2 className="accordion-header" id="flush-headingFour">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseSeven">
-                              Floating Elements
-                            </button>
-                          </h2>
-                          <div id="flush-collapseSeven" className="accordion-collapse collapse" aria-labelledby="flush-headingSeven" data-bs-parent="#accordionFlushExample">
-                            <div className="accordion-body">
-                              {
-                                floatingelems && floatingelems.map(function (xe, i) {
-                                  return (
-                                    <div
-                                      className='input-text-add dragdropper'
-                                      draggable="true"
-                                      onDragStart={(e) => handleAdding(e)}
-                                      onDragEnd={(e) => addDragElem(e)}
-                                      key={i}>
-                                      {Parser(xe)}
-                                    </div>
-                                  )
-                                })
-                              }
-                            </div>
-                          </div>
-                        </div>
-                        <div className="accordion-item otherinputsaccord">
-                          <h2 className="accordion-header" id="flush-headingFour">
-                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                              Other inputs
-                            </button>
-                          </h2>
-                          <div id="flush-collapseFive" className="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                            <div className="accordion-body">
-                              {
-                                otherelems && otherelems.map(function (xe, i) {
+                                carePlanElements && carePlanElements.map(function (xe, i) {
                                   return (
                                     <div
                                       className='input-text-add dragdropper'
@@ -667,38 +591,20 @@ function App() {
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
-                <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                  <div class="card maxh2">
-                    <div class="">
-                      <CodeMirror value={genHtml(elems)} extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]} />
+                <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabIndex="0">
+                  <div className="card maxh2">
+                    <div className="">
+                      <CodeMirror value={process('<div class="form-inline"><style media="screen">a {word-wrap: break-word;}.form-group {width: 100%; !important}.cp_label {font-size: 18px;font-weight: 900;}.cp_whiteBox {background-color:#ffffff; padding:15px; margin-bottom:10px; margin-top:10px; border-radius: 10px; border: 3px solid #014151;}</style><div class="cp_whiteBox"><div id="top"></div>').slice(0, -14) + 
+                                          genHtml(elems) + '\n  </div>\n</div>'}
+                                  extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]} 
+                      />
                     </div></div>
-                </div>
-                <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-                  <div class="card maxh2">
-                    <div class="card-body">
-                      <p>Created by <a href='https://github.com/abhibagul'>Abhishek B.</a><br />You can find the source code for it below: <br /> <a href='https://github.com/abhibagul/React-DragDrop-HTML-form-builder'>https://github.com/abhibagul/React-DragDrop-HTML-form-builder</a></p>
-                      <p>This tool uses following plugins:<br />
-                        <ol>
-                          <li>Codemirror</li>
-                          <li>jquery</li>
-                          <li>html react parser</li>
-                          <li>Bootstrap</li>
-                          <li>Font Awesome</li>
-                        </ol>
-                        and is created with React.
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
-
-
-
 
           </div>
           <div className='col-md-6 col-sm-6 output_form maxht' onDragEnter={(e) => dragPosition.current = 1}>
@@ -736,12 +642,8 @@ function App() {
                 )
               })
             }
-
-
           </div>
-
         </div>
-
       </div>
     </>
   );
