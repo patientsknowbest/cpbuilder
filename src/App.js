@@ -94,6 +94,7 @@ function App() {
 
     let el = $('<div/>').append(_elems[i])
 
+    /* eslint-disable */
     $('.option-wrapper-inner').map(function () {
       let elsep = $(this).attr('data-element');
 
@@ -183,6 +184,7 @@ function App() {
       }
 
     });
+    /* eslint-enable */
 
     _elems.splice(i, 1, el.html());
 
@@ -368,9 +370,11 @@ function App() {
 
     setTimeout(function () {
       $('.option_input, .rele, .appl').attr('data-index', i);
+      /* eslint-disable */
       $('.option_input').map(function () {
         $(this).html(outer);
       })
+      /* eslint-enable */
     }, 200)
 
   }
