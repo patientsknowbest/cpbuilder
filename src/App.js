@@ -1,15 +1,16 @@
-import { useRef, useState } from 'react';
+import {useRef, useState} from 'react';
 import './App.css';
 import Parser from 'html-react-parser';
 import $ from "jquery";
-import { Popover, OverlayTrigger } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {OverlayTrigger, Popover} from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import CodeMirror from '@uiw/react-codemirror';
-import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
-import { languages } from '@codemirror/language-data';
+import {markdown, markdownLanguage} from '@codemirror/lang-markdown';
+import {languages} from '@codemirror/language-data';
 import Nav from './nav';
+
 function App() {
 
   library.add(faTrash);
@@ -60,7 +61,6 @@ function App() {
   }
 
   const handleAdding = (e) => {
-    //console.log('adding started');
   }
 
   const addDragElem = (e) => {
@@ -91,12 +91,9 @@ function App() {
 
     //index
     let i = $(e.target).attr('data-index');
-    
-    // let el = $(_elems[i]);
-    // if(el.length < 2){
+
     let el = $('<div/>').append(_elems[i])
-    // }
-    //console.log(el, 'elb')
+
     $('.option-wrapper-inner').map(function () {
       let elsep = $(this).attr('data-element');
 
@@ -109,12 +106,10 @@ function App() {
 
         //set attribs
         $(this).find('.attrib-options .row').map(function () {
-          //console.log("attribs change");
           
           //console.log($(this).find('.col-sm-4').text());
           if ($(this).find('.col-sm-4').text() == "Psc of input") {
             let numberOfDynamicBlocks = parseInt($(this).find('.dynamicNumberInput').val(), 10);
-            //console.log(parseInt($(this).find('.dynamicNumberInput').val(), 10));
             const inputString = _elems[i];
             const searchSubstring = '<div class="row">';
             const regex = new RegExp(searchSubstring, 'g');
@@ -156,83 +151,18 @@ function App() {
               for (let i = occurrences; i < numberOfDynamicBlocks; i++) {
                 finalCheckBoxHTML = finalCheckBoxHTML + currentInputHTML;
               }
-              //console.log(occurrences, numberOfDynamicBlocks);
 
-              //console.log(finalCheckBoxHTML);
-
-              const modifiedString = _elems[i].slice(0, closingDivsPosition) + finalCheckBoxHTML + _elems[i].slice(closingDivsPosition);
-              _elems[i] = modifiedString;
+              _elems[i] = _elems[i].slice(0, closingDivsPosition) + finalCheckBoxHTML + _elems[i].slice(closingDivsPosition);
             }
             if (occurrences > numberOfDynamicBlocks) {
-              const modifiedString = _elems[i].slice(0, startingBlockPosition) + _elems[i].slice(closingDivsPosition);
-              console.log(modifiedString);
-              _elems[i] = modifiedString;
+              _elems[i] = _elems[i].slice(0, startingBlockPosition) + _elems[i].slice(closingDivsPosition);
             }
-            
-            
-            //console.log(_elems[i]);
-            //console.log(elsep);
-            //console.log(el);
-            //console.log(el.find(elsep));
-            
-            // Assuming you have the desired number of checkboxes in a variable called 'numberOfCheckboxes'
 
-            // Generate the HTML code for one checkbox
-
-            
-
-            // Find the container element where the checkboxes will be added
-            //var checkboxesContainer = $('.row .form-check').first().parent().parent();
             el = $('<div/>').append(_elems[i])
-            //el.append(checkboxHTML)
-            
-
-            // Append the desired number of checkboxes to the container
-            //for (var i = occurrences; i < numberOfDynamicBlocks; i++) {
-            //  checkboxesContainer.append(checkboxHTML);
-            //}
-            
           }
           
           el.find(elsep).attr($(this).find('.col-sm-4').text(), $(this).find('.dynamicInput').val())
         });
-
-        //required
-        if ($(this).find('.isReq').length > 0) {
-          //class
-          if ($(this).find('.isReq').is(":checked")) {
-            //add required attrib
-            el.find(elsep).attr('required', 'required');
-          } else {
-            //remove required attr
-            el.find(elsep).removeAttr('required')
-          }
-        }
-
-        //disabled
-        if ($(this).find('.isDsc').length > 0) {
-          //class
-          if ($(this).find('.isDsc').is(":checked")) {
-            //add required attrib
-            el.find(elsep).attr('disabled', 'disabled');
-          } else {
-            //remove required attr
-            el.find(elsep).removeAttr('disabled')
-          }
-        }
-
-        //readonly
-        if ($(this).find('.isRsc').length > 0) {
-          //class
-          if ($(this).find('.isRsc').is(":checked")) {
-            //add required attrib
-            el.find(elsep).attr('readonly', 'readonly');
-          } else {
-            //remove required attr
-            el.find(elsep).removeAttr('readonly')
-          }
-        }
-
 
         //sizes
         if ($(this).find('select').length > 0) {
@@ -248,16 +178,13 @@ function App() {
 
         //content
         if ($(this).find('.contenttxt').length > 0) {
-          //console.log("context change");
-          //console.log($(this).find('.contenttxt'));
           el.find(elsep).html($(this).find('.contenttxt').val())
         }
       }
 
     });
 
-    // //console.log(el.html(),'ela');
-    _elems.splice(i, 1, el.html()); //lets try if it works?
+    _elems.splice(i, 1, el.html());
 
     //update
     setElems(_elems);
@@ -393,8 +320,6 @@ function App() {
 
       
       if (this.nodeName.toLowerCase() == "p" && editableNumberOfInput) {
-        //console.log(this);
-        //console.log(numberOfInputs);
         ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">Psc of input</div><div class="col-sm-8"><input style="line-height: 30px; display: block; width: 50%; overflow-wrap: break-word; word-wrap: break-word;" class="form-control form-control-sm dynamicNumberInput" type="number" value="' + numberOfInputs + '" min="1"></div></div>')
       }
 
@@ -418,14 +343,11 @@ function App() {
 
       //attribs
       $.each(this.attributes, function () {
-        // this.attributes is not a plain object, but an array
-        // of attribute nodes, which contain both the name and value
+        // this.attributes is not a plain object, but an array of attribute nodes, which contain both the name and value
         if (this.specified) {
-          //console.log(this.name, this.value);
           
           // NOTE: here we add extra editable options to the UI, but for now we'd not need editing class, style etc. attributes
           if (this.name != 'checked' && this.name != 'class' && this.name != 'rows' && this.name != 'style' && this.name != 'type' && this.name != 'allowfullscreen') {
-            //console.log(this.value);  
             if (this.name != 'placeholder' || this.value == 'PLACEHOLDER') {
               ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
             }

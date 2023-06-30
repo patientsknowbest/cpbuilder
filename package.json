@@ -2,7 +2,7 @@
   "name": "formbuilder",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dorogimate.github.io/cpbuilder",
+  "homepage": "https://patientsknowbest.github.io/cpbuilder",
   "dependencies": {
     "@codemirror/lang-html": "^6.1.2",
     "@codemirror/lang-markdown": "^6.0.2",
@@ -33,6 +33,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "rules": {
+      "no-unused-vars": "off"
+    },
     "extends": [
       "react-app",
       "react-app/jest"
