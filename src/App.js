@@ -108,14 +108,14 @@ function App() {
         $(this).find('.attrib-options .row').map(function () {
           
           //console.log($(this).find('.col-sm-4').text());
-          if ($(this).find('.col-sm-4').text() == "Psc of input") {
+          if ($(this).find('.col-sm-4').text() === "Psc of input") {
             let numberOfDynamicBlocks = parseInt($(this).find('.dynamicNumberInput').val(), 10);
             const inputString = _elems[i];
             const searchSubstring = '<div class="row">';
             const regex = new RegExp(searchSubstring, 'g');
             const occurrences = (inputString.match(regex) || []).length;
 
-            
+
             var radioButtonHTML = '<div class="row">' + 
             '  <div class="form-check input-group">' + 
             '    <input class="form-check-input col-xs-1" type="radio" name="ID/NAME" id="ID/NAME" value="VALUE">' + 
@@ -266,10 +266,10 @@ function App() {
 
     //create the elemental form
     $e.children().each(function () {
-      if (this.nodeName.toLowerCase() == "p") {
+      if (this.nodeName.toLowerCase() === "p") {
         isLabelPresent = true;
       }
-      if (this.nodeName.toLowerCase() == "input") {
+      if (this.nodeName.toLowerCase() === "input") {
         isEditableInputPresent = true;
         numberOfInputs++;
       }
@@ -301,9 +301,9 @@ function App() {
       let headerelem = $('<div class="headerelem"/>')
       let nonattrib = $('<div class="nonattrib"/>')
       //text
-      if (!(this.nodeName.toLowerCase() == "input" || this.nodeName.toLowerCase() == "textarea")) {
+      if (!(this.nodeName.toLowerCase() === "input" || this.nodeName.toLowerCase() === "textarea")) {
         headerelem.append('<div class="row optionrow"><div class="col-md-1"><div className="form-check form-switch"><input className="form-check-input switchelem" type="checkbox" checked role="switch" /></div></div><div class="col-md-10"><h6><span class="badge bg-secondary">' + this.nodeName + '</span></h6></div></div>');
-        if (this.nodeName.toLowerCase() != "hr" && this.nodeName.toLowerCase() != "img" && this.nodeName.toLowerCase() != "iframe") {
+        if (this.nodeName.toLowerCase() !== "hr" && this.nodeName.toLowerCase() !== "img" && this.nodeName.toLowerCase() !== "iframe") {
           nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">content : </div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput contenttxt" type="text" value="' + $(this).html() + '"></div></div>')
         }
       } else {
@@ -311,7 +311,7 @@ function App() {
         headerelem.append('<div class="row optionrow"><div class="col-md-1"><div className="form-check form-switch"><input className="form-check-input switchelem" type="checkbox" checked role="switch" disabled /></div></div><div class="col-md-10"><h6><span class="badge bg-secondary">' + this.nodeName + '</span></h6></div></div>');
       
         // These section are good to add node specific edit opportunities. Like below to a textarea we can add a flag if it's required or not.
-        if (this.nodeName.toLowerCase() == "textarea") {}
+        if (this.nodeName.toLowerCase() === "textarea") {}
       }
       htm.append(headerelem);
       htm.append(nonattrib);
@@ -319,15 +319,15 @@ function App() {
       let ham = $('<div class="attrib-options"></div>');
 
       
-      if (this.nodeName.toLowerCase() == "p" && editableNumberOfInput) {
+      if (this.nodeName.toLowerCase() === "p" && editableNumberOfInput) {
         ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">Psc of input</div><div class="col-sm-8"><input style="line-height: 30px; display: block; width: 50%; overflow-wrap: break-word; word-wrap: break-word;" class="form-control form-control-sm dynamicNumberInput" type="number" value="' + numberOfInputs + '" min="1"></div></div>')
       }
 
-      if (this.nodeName.toLowerCase() == "hr") {
+      if (this.nodeName.toLowerCase() === "hr") {
         
         $.each(this.attributes, function () {
           if (this.specified) {
-            if (this.name == 'style') {
+            if (this.name === 'style') {
               ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input style="line-height: 45px; display: block; width: 100%; overflow-wrap: break-word; word-wrap: break-word;" class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
                 //console.log(this.ownerElement.style.height);
                 //console.log(this.ownerElement.style.backgroundColor);
@@ -347,8 +347,8 @@ function App() {
         if (this.specified) {
           
           // NOTE: here we add extra editable options to the UI, but for now we'd not need editing class, style etc. attributes
-          if (this.name != 'checked' && this.name != 'class' && this.name != 'rows' && this.name != 'style' && this.name != 'type' && this.name != 'allowfullscreen') {
-            if (this.name != 'placeholder' || this.value == 'PLACEHOLDER') {
+          if (this.name !== 'checked' && this.name !== 'class' && this.name !== 'rows' && this.name !== 'style' && this.name !== 'type' && this.name !== 'allowfullscreen') {
+            if (this.name !== 'placeholder' || this.value === 'PLACEHOLDER') {
               ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
             }
           }
@@ -358,7 +358,7 @@ function App() {
       htm.append(ham);
       htm.append('<hr/>')
 
-      if (this.nodeName.toLowerCase() == "a") {
+      if (this.nodeName.toLowerCase() === "a") {
         htm = $('<h4 style="margin-top: 15px; margin-left: 5px;">No editing possible</h4>');
         ham = '';
       }
@@ -396,7 +396,7 @@ function App() {
 
       format(node.children[i], level);
 
-      if (node.lastElementChild == node.children[i]) {
+      if (node.lastElementChild === node.children[i]) {
         textNode = document.createTextNode('\n' + indentAfter);
         node.appendChild(textNode);
       }
