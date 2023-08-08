@@ -434,7 +434,7 @@ function App() {
     // Return to top button
     '<a href="#top" class="btn arrow btn-primary" title="Back to Top" alt="Click here to return to the Table of Contents" style="margin-top:15px; margin-bottom:15px;">Back to Top</a>',
 
-    // Goto save button
+    // Go to save button
     '<a href="#fileUploadForm_save" class="btn arrow btn-primary" title="Back to Top" alt="Click here to save the Care Plan" style="margin-top:15px; margin-bottom:15px;">Go to Save Care Plan</a>',
     
     // Horizontal line separator
