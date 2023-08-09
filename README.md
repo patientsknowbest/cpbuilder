@@ -44,7 +44,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 
 
-### Deployment
+# Deployment
 
 ## How to deploy Care Plan builder tool with `npm run build` and GitHub Pages
 
@@ -52,12 +52,9 @@ At the moment on GitHub under Settings -> Pages the 'Build and Deployment' set u
 
 **Steps to deploy CarePlan builder tool:**
 1. Checkout “main” branch locally in your IDE, make changes, if you are satisfied with the changes, then:
-2. Run `npm run build`, this will build static files under the /build folder
-3. Checkout “gh-pages” branch
-4. Copy the contents of the /build folder into the root of the “gh-pages” branch
-5. Commit changes onto “gh-pages” branch
-6. Push changes to “gh-pages” branch
-7. Github pages will take care of the rest, changes should be visible on https://patientsknowbest.github.io/cpbuilder/
+2. Run `npm run predeploy`, this will build static files under the /build folder. Basically, it is equal to if we run the following command: ``npm run build`
+3. Then run `npm run deploy` which calls `gh-pages -d build` script and pushed the content of the build folder to gh-pages branch
+7. Github pages will take care of the rest, it just needs a few minutes and changes should be visible on https://patientsknowbest.github.io/cpbuilder/
 
 **Conversation and findings about GitHub Actions:**
 
