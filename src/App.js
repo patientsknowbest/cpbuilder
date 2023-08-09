@@ -483,11 +483,10 @@ function App() {
                 <li className="nav-item" role="presentation">
                   <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Care Plan HTML Code</button>
                 </li>
-                {/* Care Plan renderer -> the rendered care plan will be visible just as it would look like on our site 
+                {/* Care Plan renderer -> the rendered care plan will be visible just as it would look like on our site */}
                 <li className="nav-item" role="presentation">
                   <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Care Plan Renderer</button>
                 </li>
-                */}
 
               </ul>
               <div className="tab-content" id="pills-tabContent">

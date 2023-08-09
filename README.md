@@ -1,10 +1,11 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+
+When you first want to start up the app you must, and when pulled some changes from GitHub, you might need to install all the dependencies. \
+After intalling them, you can run the below script and the application starts up. 
 
 ### `npm start`
 
@@ -27,7 +28,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm deploy`
+
+In theory this should deploy and publish the page with the help of GitHub pages. Currently, it is not working, see the Deployment section about, how to deploy the Care Plan builder tool.
 
 ### `npm run eject`
 
@@ -39,16 +42,65 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## How to deploy Care Plan builder tool with `npm run build` and GitHub Pages
 
-### `npm run build` fails to minify
+At the moment on GitHub under Settings -> Pages the 'Build and Deployment' set up is the following: the GitHub Pages site is currently being built from the gh-pages branch as gh-pages/root is targetted. At the same place, it can turn to use GitHub Actions, which would continously integrate, build and deploy the pushed changes, but currently we agreed on manual deployment.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Steps to deploy CarePlan builder tool:**
+1. Checkout “main” branch locally in your IDE, make changes, if you are satisfied with the changes, then:
+2. Run `npm run build`, this will build static files under the /build folder
+3. Checkout “gh-pages” branch
+4. Copy the contents of the /build folder into the root of the “gh-pages” branch
+5. Commit changes onto “gh-pages” branch
+6. Push changes to “gh-pages” branch
+7. Github pages will take care of the rest, changes should be visible on https://patientsknowbest.github.io/cpbuilder/
+
+**Conversation and findings about GitHub Actions:**
+
+Three ways to deploy the tool with the help of GitHub Actions:
+
+1. Option #1
+- Under Settings, set Pages/Branch setting to “gh-pages” and “root”
+- In your github actions do the following:
+    - Create a trigger for when a commit is pushed onto the “main” branch
+    - Checkout the “main” branch
+    - Build the project using npm (on the main branch)
+    - Checkout “gh-pages” branch
+    - Copy content of the /build folder into the root of “gh-pages” branch (this is the tricky bit)
+    - Commit changes onto the “gh-pages” branch
+    - Push to “gh-pages” branch, let github pages take care of the rest
+
+2. Option #2
+- Under Settings, set Pages/Branch setting to “main” and “/build”
+- In your github actions:
+    - Create a trigger for when a commit is pushed onto the “main” branch
+    - Checkout the “main” branch
+    - Build the project using npm (on the main branch)
+    - Commit content of the “/build” folder
+    - Push to the “main” branch
+    - Somehow prevent recursive main branch triggers
+
+3. Option #3
+- Under settings, set pages/branch setting to “main” and “/build”
+- In your github actions:
+    - Manually run npm build locally
+    - Push changes to main branch
+    - Let github pages take care of the rest
+
+
+**The setup of GitHub Actions at the moment is not working, in the sense it is not deploying the tool:**
+1. Deploy from a branch/folder
+2. Deploy using Github Actions (beta)
+    - Currently there is a “Node.js CI” workflow:
+        - Check out “main” on push or pr raise
+        - Does an npm build
+        - (this does not deploy anything atm, just runs)
+    - And there is a pages-build-deployment workflow
+        - This was created via the UI, using “GitHub Pages Jekyll” action (reusable), this is currently not available in the source code
+        - This is also probably dummy and doesn’t deploy anything at the moment
+
+If approach 2 is chosen we will have to take some of the steps from “GitHub Pages Jekyll” option and integrate it into our own worflow  “Node.js CI”.
