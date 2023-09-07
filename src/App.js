@@ -20,6 +20,20 @@ function App() {
     const dragOverItem = useRef(null);
     const dragPosition = useRef(0);
 
+    const radioButtonHTML = '<div class="row">' +
+        '  <div class="form-check input-group">' +
+        '    <input class="form-check-input col-xs-1" type="radio" name="cp-radio-button-element-name" id="cp-radio-button-element-id" value="VALUE">' +
+        '    <label class="form-check-label col-xs-10" for=cp-radio-button-element-for"> VALUE</label>' +
+        '  </div>' +
+        '</div>';
+
+    const checkboxHTML = '<div class="row">' +
+        '  <div class="form-check col-xs-12 pull-left input-group">' +
+        '    <input class="form-check-input form-control" type="checkbox" name="cp-checkbox-element-name" id="cp-checkbox-element-id" value="VALUE"/>' +
+        '    <label class="cp_label col-xs-10 pull-right" for="cp-checkbox-element-for">VALUE</label>' +
+        '  </div>' +
+        '</div>';
+
     const arrangeElem = () => {
         if ($('#element-option').length > 0) $('#element-option').html('');
         $('.highlighted').removeClass('.highlighted');
@@ -412,27 +426,27 @@ function App() {
     function createInputWithLabel() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-input-with-label');
         return '<div class="row" style="margin-top: 15px;">' +
-        '<div class="col-sm-6 input-group">' +
-        '<label class="cp-label cp-input-with-label" for=cp-for-input-with-label-' + numberOfThisElementInDoc + '>LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;">' +
-        '<input type="text" name=cp-input-name-with-label-' + numberOfThisElementInDoc + ' id=cp-id-input-with-label-' + numberOfThisElementInDoc + ' class="form-control" style="width: 100%;" placeholder="PLACEHOLDER"/>' +
-        '<span id=cp-span-input-with-label-' + numberOfThisElementInDoc + ' class="help-block">HELP TEXT' +
-        '</span>' +
-        '</div>' +
-        '</div>';
+            '<div class="col-sm-6 input-group">' +
+            '<label class="cp-label cp-input-with-label" for=cp-for-input-with-label-' + numberOfThisElementInDoc + '>LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;">' +
+            '<input type="text" name=cp-input-name-with-label-' + numberOfThisElementInDoc + ' id=cp-id-input-with-label-' + numberOfThisElementInDoc + ' class="form-control" style="width: 100%;" placeholder="PLACEHOLDER"/>' +
+            '<span id=cp-span-input-with-label-' + numberOfThisElementInDoc + ' class="help-block">HELP TEXT' +
+            '</span>' +
+            '</div>' +
+            '</div>';
     }
 
     function createDateInputWithLabel() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-date-input-with-label');
         return '<div class="row cp-date-input-with-label" style="margin-top: 15px;">' +
-                '<div class="col-sm-6 input-group">' +
-                    '<label class="cp_label" for=cp-for-date-input-with-label-' + numberOfThisElementInDoc + '>LABEL' +
-                    '</label>' +
-                '</div>' +
-                '<div class="col-sm-6 input-group" style="margin-top: 15px;">' +
-                    '<input type="date" name=cp-date-input-with-label-' + numberOfThisElementInDoc + ' id=cp-id-date-input-with-label-' + numberOfThisElementInDoc + ' class="form-control" placeholder="dd/mm/yyyy"/>' +
-                    '<span class="help-block">HELP TEXT' +
-                    '</span>' +
-                '</div>' +
+            '<div class="col-sm-6 input-group">' +
+            '<label class="cp_label" for=cp-for-date-input-with-label-' + numberOfThisElementInDoc + '>LABEL' +
+            '</label>' +
+            '</div>' +
+            '<div class="col-sm-6 input-group" style="margin-top: 15px;">' +
+            '<input type="date" name=cp-date-input-with-label-' + numberOfThisElementInDoc + ' id=cp-id-date-input-with-label-' + numberOfThisElementInDoc + ' class="form-control" placeholder="dd/mm/yyyy"/>' +
+            '<span class="help-block">HELP TEXT' +
+            '</span>' +
+            '</div>' +
             '</div>';
     }
 
@@ -441,33 +455,33 @@ function App() {
         let numberOfSelect = elementCounterByClassName('cp-select');
         let numberOfSelectOption = elementCounterByClassName('cp-select-option');
         return '<div class="row cp-select-with-label" id=cp-select-id-' + numberOfThisElementInDoc + ' style="margin-top: 15px;">' +
-                    '<div class="col-sm-6 input-group">' +
-                        '<label class="cp_label" for="ID/NAME">LABEL' +
-                        '</label>' +
-                    '</div>' +
-                    '<div class="col-sm-6 input-group" style="margin-top: 15px;">' +
-                        '<select class="form-control input-group cp-select" name=cp-select-name' + numberOfThisElementInDoc + '-' + numberOfSelect + ' id=cp-select-id' + numberOfThisElementInDoc + '-' + numberOfSelect +'>' +
-                            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption +' value="VALUE">VALUE' +
-                            '</option>' +
-                            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption +' value="VALUE">VALUE' +
-                            '</option>' +
-                            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption +' value="VALUE">VALUE' +
-                            '</option>' +
-                        '</select>' +
-                    '</div>' +
-                '</div>'
+            '<div class="col-sm-6 input-group">' +
+            '<label class="cp_label" for="ID/NAME">LABEL' +
+            '</label>' +
+            '</div>' +
+            '<div class="col-sm-6 input-group" style="margin-top: 15px;">' +
+            '<select class="form-control input-group cp-select" name=cp-select-name' + numberOfThisElementInDoc + '-' + numberOfSelect + ' id=cp-select-id' + numberOfThisElementInDoc + '-' + numberOfSelect + '>' +
+            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption + ' value="VALUE">VALUE' +
+            '</option>' +
+            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption + ' value="VALUE">VALUE' +
+            '</option>' +
+            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption + ' value="VALUE">VALUE' +
+            '</option>' +
+            '</select>' +
+            '</div>' +
+            '</div>'
     }
 
     function createTextAreaInputWithLabel() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-text-area-input-with-label');
         return '<div class="row" style="margin-top: 15px;">' +
-                '<div class="col-sm-12 input-group">' +
-                    '<label class="cp_label cp-text-area-input-with-label" for=cp-for-text-area-with-label-' + numberOfThisElementInDoc + '>LABEL' +
-                    '</label>' +
-                    '<textarea class="form-control" name=cp-name-text-area-with-label-' + numberOfThisElementInDoc + ' id=cp-id-text-area-with-label-' + numberOfThisElementInDoc + ' rows="3" style="width: 100%;">' +
-                    '</textarea>' +
-                    '</div>' +
-                '</div>';
+            '<div class="col-sm-12 input-group">' +
+            '<label class="cp_label cp-text-area-input-with-label" for=cp-for-text-area-with-label-' + numberOfThisElementInDoc + '>LABEL' +
+            '</label>' +
+            '<textarea class="form-control" name=cp-name-text-area-with-label-' + numberOfThisElementInDoc + ' id=cp-id-text-area-with-label-' + numberOfThisElementInDoc + ' rows="3" style="width: 100%;">' +
+            '</textarea>' +
+            '</div>' +
+            '</div>';
     }
 
     function createRadioInputWithLabel() {
@@ -485,7 +499,7 @@ function App() {
             '</div>';
     }
 
-    function createCheckboxInputWithLabel(){
+    function createCheckboxInputWithLabel() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-checkbox-element');
         return '<div class="row cp-checkbox-element" id=cp-checkbox-id-' + numberOfThisElementInDoc + ' style="margin-top: 15px;">' +
             '<div class="col-sm-6 input-group">' +
@@ -677,20 +691,5 @@ function App() {
         </>
     );
 }
-
-let checkboxHTML = '<div class="row">' +
-    '  <div class="form-check col-xs-12 pull-left input-group">' +
-    '    <input class="form-check-input form-control" type="checkbox" name="cp-checkbox-element-name" id="cp-checkbox-element-id" value="VALUE"/>' +
-    '    <label class="cp_label col-xs-10 pull-right" for="cp-checkbox-element-for">VALUE</label>' +
-    '  </div>' +
-    '</div>';
-
-let radioButtonHTML = '<div class="row">' +
-    '  <div class="form-check input-group">' +
-    '    <input class="form-check-input col-xs-1" type="radio" name="cp-radio-button-element-name" id="cp-radio-button-element-id" value="VALUE">' +
-    '    <label class="form-check-label col-xs-10" for=cp-radio-button-element-for"> VALUE</label>' +
-    '  </div>' +
-    '</div>';
-
 
 export default App;
