@@ -1,0 +1,38 @@
+import {Component, Injectable, Input} from '@angular/core';
+import {TextElementComponent} from "./text-element/text-element.component";
+import {ElementsComponent} from "../elements.component";
+import {InputElementComponent} from "./input-element/input-element.component";
+
+@Component({
+  selector: 'app-element-selection-tab',
+  templateUrl: './element-selection-tab.component.html',
+  styleUrls: ['./element-selection-tab.component.css']
+})
+export class ElementSelectionTabComponent {
+  textType: string;
+  inputType: string;
+  selectType: string;
+  radioType: string;
+  checkType: string;
+  backToTopType: string;
+
+  constructor(public elementComponent: ElementsComponent) {
+    this.textType = 'textElementComponent';
+    this.inputType = 'inputElementComponent';
+    this.selectType = 'selectElementComponent';
+    this.radioType = 'radioElementComponent';
+    this.checkType = 'checkElementComponent';
+    this.backToTopType = 'backToTopElementComponent';
+
+  }
+
+  public createComponent(element: string): void {
+    this.elementComponent.addComponent(element);
+  }
+}
+
+@Injectable()
+export class ElementType {
+
+}
+

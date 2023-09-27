@@ -1,0 +1,9 @@
+.mat-dialog-close{
+  align-items: center;
+}
+
+
+mat-mdc-dialog-container{
+  position: relative !important;
+}
+

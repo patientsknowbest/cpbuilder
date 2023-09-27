@@ -1,0 +1,17 @@
+.code-container{
+  min-width: 80vw;
+  min-height: 70vh;
+  max-width: 80vw;
+  border: 2px solid black;
+  white-space: pre;
+  margin: 20px auto auto;
+  word-wrap: break-word;
+  justify-content: center;
+  align-content: center;
+  overflow: scroll;
+}
+* {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

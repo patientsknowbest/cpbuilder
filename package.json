@@ -1,59 +1,39 @@
 {
-  "name": "formbuilder",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "https://patientsknowbest.github.io/cpbuilder",
-  "dependencies": {
-    "@codemirror/lang-html": "^6.1.2",
-    "@codemirror/lang-markdown": "^6.0.2",
-    "@codemirror/language-data": "^6.1.0",
-    "@fortawesome/fontawesome-svg-core": "^6.2.0",
-    "@fortawesome/free-solid-svg-icons": "^6.2.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@uiw/react-codemirror": "^4.12.4",
-    "bootstrap": "^5.2.2",
-    "html-react-parser": "^3.0.4",
-    "jquery": "^3.6.1",
-    "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
-    "react-bootstrap": "^2.5.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "cpb",
+  "version": "0.0.0",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
-  "eslintConfig": {
-    "rules": {
-      "no-unused-vars": "off"
-    },
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.2.0",
+    "@angular/common": "^16.2.0",
+    "@angular/compiler": "^16.2.0",
+    "@angular/core": "^16.2.0",
+    "@angular/forms": "^16.2.0",
+    "@angular/material": "^16.2.3",
+    "@angular/platform-browser": "^16.2.0",
+    "@angular/platform-browser-dynamic": "^16.2.0",
+    "@angular/router": "^16.2.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.13.0"
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "@angular-devkit/build-angular": "^16.2.1",
+    "@angular/cli": "~16.2.1",
+    "@angular/compiler-cli": "^16.2.0",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.1.3"
   }
 }

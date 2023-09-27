@@ -1,0 +1,11 @@
+app-text-element{
+  background: black;
+}
+.row {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+button {
+  margin-right: 5px;
+}
