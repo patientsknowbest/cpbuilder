@@ -1,5 +1,4 @@
 import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
-import {ElementsComponent} from "./elements/elements.component";
 
 interface RouteStorageObject {
   snapshot: ActivatedRouteSnapshot;
@@ -10,23 +9,28 @@ export class AppReuseStrategy implements RouteReuseStrategy {
   private routeStore = new Map<string, DetachedRouteHandle>();
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    const path = route.routeConfig?.path;
-    return <boolean>(path && ['/','generate-component'].includes(<string>path));
+    // @ts-ignore
+    const path = route.routeConfig.path;
+    // @ts-ignore
+    return path && ['elements-component', 'generate-component'].includes(path);
   }
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-    this.routeStore.set(<string>route.routeConfig?.path, handle);
+    // @ts-ignore
+    this.routeStore.set(route.routeConfig.path, handle);
   }
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
     // @ts-ignore
     const path = route.routeConfig.path;
-    return <boolean>(
-      path && ['/','generate-component'].includes(path) && !!this.routeStore.get(path)
+    // @ts-ignore
+    return (
+        path && ['elements-component', 'generate-component'].includes(path) && !!this.routeStore.get(path)
     );
   }
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-
-    const path = route.routeConfig?.path;
-    return <DetachedRouteHandle>this.routeStore?.get(<string>path);
+    // @ts-ignore
+    const path = route.routeConfig.path;
+    // @ts-ignore
+    return this.routeStore.get(path);
   }
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     return future.routeConfig === curr.routeConfig;

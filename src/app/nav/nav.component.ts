@@ -10,6 +10,7 @@ import {GenerateComponent} from "../generate/generate.component";
 export class NavComponent implements OnInit {
 
   private mappedComponents: Map<string, ComponentRef<any>>;
+  private sumHtml: string;
 
   constructor(private dataService: Service) {
   }
@@ -24,9 +25,9 @@ export class NavComponent implements OnInit {
      This step has to be done first otherwise the deletion would not work because after
      deleting the items of the map it would retrieve again them from the datasource due to the live subscription.
      **/
-    this.mappedComponents.forEach(componentRef => componentRef.destroy())
-    this.mappedComponents.forEach((componentRef,keyValue) => {
-      this.mappedComponents.delete(keyValue)
+    this.mappedComponents.forEach(a => a.destroy())
+    this.mappedComponents.forEach((a,v) => {
+      this.mappedComponents.delete(v)
     })
   }
 }
