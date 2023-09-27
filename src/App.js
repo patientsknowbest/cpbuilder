@@ -13,8 +13,9 @@ import Nav from './nav';
 function App() {
 
     library.add(faTrash);
+    let init = true;
 
-    const [elems, setElems] = useState([]);
+    let [elems, setElems] = useState([]);
 
     const dragItem = useRef(null);
     const dragOverItem = useRef(null);
@@ -22,23 +23,21 @@ function App() {
 
     const radioButtonHTML = '<div class="row">' +
         '  <div class="form-check input-group">' +
-        '    <input class="form-check-input col-xs-1" type="radio" name="cp-radio-button-element-name" id="cp-radio-button-element-id" value="VALUE">' +
-        '    <label class="form-check-label col-xs-10" for=cp-radio-button-element-for"> VALUE</label>' +
+        '    <input class="form-check-input col-xs-1 checked" type="radio" name="cp-radio-button-element-name" id="cp-radio-button-element-id" value="VALUE">' +
+        '    <label class="form-check-label col-xs-10 checked" for=cp-radio-button-element-for"> VALUE</label>' +
         '  </div>' +
         '</div>';
 
     const checkboxHTML = '<div class="row">' +
         '  <div class="form-check col-xs-12 pull-left input-group">' +
-        '    <input class="form-check-input form-control" type="checkbox" name="cp-checkbox-element-name" id="cp-checkbox-element-id" value="VALUE"/>' +
-        '    <label class="cp_label col-xs-10 pull-right" for="cp-checkbox-element-for">VALUE</label>' +
+        '    <input class="form-check-input form-control checked" type="checkbox" name="cp-checkbox-element-name" id="cp-checkbox-element-id" value="VALUE"/>' +
+        '    <label class="cp_label col-xs-10 pull-right checked" for="cp-checkbox-element-for">VALUE</label>' +
         '  </div>' +
         '</div>';
 
     const arrangeElem = () => {
         if ($('#element-option').length > 0) $('#element-option').html('');
         $('.highlighted').removeClass('.highlighted');
-
-        //console.log(dragPosition.current);
 
         if (dragPosition.current > 0) {
             //duplicate element
@@ -101,11 +100,10 @@ function App() {
     const handleChange = (e) => {
         let _elems = [...elems];
 
-
         //index
         let i = $(e.target).attr('data-index');
 
-        let el = $('<div/>').append(_elems[i])
+        let element = $('<div/>').append(_elems[i])
 
         /* eslint-disable */
         $('.option-wrapper-inner').map(function () {
@@ -114,9 +112,28 @@ function App() {
             //should we go with the element or remove it?
             if (!$(this).find('.headerelem input').is(":checked")) {
 
+
                 //remove this element
-                el.find(elsep).remove();
+                //console.log('target: ' + $(elsep).attr('class')) /* cp-label cp-input-with-label checked */
+                let targetElementFromTheDragBox = $(elsep).attr('class');
+                let arrayOfClassNames = targetElementFromTheDragBox.split(" ");
+                let strValue = arrayOfClassNames.join('.');
+                let fullosString = '.' + strValue;
+                let parent = $(fullosString).parents().closest('.right');
+                let child = parent.find($(fullosString));
+                child.html('');
+                child.removeClass('checked');
+
             } else {
+                // console.log('target: ' + $(elsep).attr('class')) /* cp-label cp-input-with-label */
+                let targetElementFromTheDragBox1 = $(elsep).attr('class');
+                let arrayOfClassNames1 = targetElementFromTheDragBox1.split(" ");
+                let strValue1 = arrayOfClassNames1.join('.');
+                let fullosString1 = '.' + strValue1;
+                fullosString1 = fullosString1.replace(".checked", "")
+                let parent1 = $(fullosString1).parents().closest('.right');
+                let child1 = parent1.find($(fullosString1))
+                child1.addClass('checked')
 
                 //set attribs
                 $(this).find('.attrib-options .row').map(function () {
@@ -156,34 +173,34 @@ function App() {
                             _elems[i] = _elems[i].slice(0, startingBlockPosition) + _elems[i].slice(closingDivsPosition);
                         }
 
-                        el = $('<div/>').append(_elems[i])
+                        element = $('<div/>').append(_elems[i])
                     }
 
-                    el.find(elsep).attr($(this).find('.col-sm-4').text(), $(this).find('.dynamicInput').val())
+                    element.find(elsep).attr($(this).find('.col-sm-4').text(), $(this).find('.dynamicInput').val())
                 });
 
                 //sizes
                 if ($(this).find('select').length > 0) {
-                    let svl = el.find(elsep)
+                    let svl = element.find(elsep)
 
                     //class
-                    if (el.find(elsep).hasClass('form-control')) el.find(elsep).removeClass('form-control');
-                    if (el.find(elsep).hasClass('form-control-sm')) el.find(elsep).removeClass('form-control-sm');
-                    if (el.find(elsep).hasClass('form-control-lg')) el.find(elsep).removeClass('form-control-lg');
+                    if (element.find(elsep).hasClass('form-control')) element.find(elsep).removeClass('form-control');
+                    if (element.find(elsep).hasClass('form-control-sm')) element.find(elsep).removeClass('form-control-sm');
+                    if (element.find(elsep).hasClass('form-control-lg')) element.find(elsep).removeClass('form-control-lg');
 
                     svl.addClass($(this).find('select').val());
                 }
 
                 //content
                 if ($(this).find('.contenttxt').length > 0) {
-                    el.find(elsep).html($(this).find('.contenttxt').val())
+                    element.find(elsep).html($(this).find('.contenttxt').val())
                 }
             }
 
         });
         /* eslint-enable */
 
-        _elems.splice(i, 1, el.html());
+        _elems.splice(i, 1, element.html());
 
         //update
         setElems(_elems);
@@ -193,7 +210,6 @@ function App() {
     }
 
     const removeSelector = (e) => {
-        // //console.log('remove el', $(e.target).closest('button').attr('data-index'));
         if ($('#element-option').length > 0) $('#element-option').html('');
         let _elems = [...elems];
 
@@ -302,7 +318,12 @@ function App() {
             let nonattrib = $('<div class="nonattrib"/>')
             //text
             if (!(this.nodeName.toLowerCase() === "input" || this.nodeName.toLowerCase() === "textarea")) {
-                headerelem.append('<div class="row optionrow"><div class="col-md-1"><div className="form-check form-switch"><input className="form-check-input switchelem" type="checkbox" checked role="switch" /></div></div><div class="col-md-10"><h6><span class="badge bg-secondary">' + this.nodeName + '</span></h6></div></div>');
+                if ($(this).hasClass("checked")){
+                    headerelem.append('<div class="row optionrow"><div class="col-md-1"><div className="form-check form-switch"><input className="form-check-input switchelem" type="checkbox" checked role="switch" /></div></div><div class="col-md-10"><h6><span class="badge bg-secondary">' + this.nodeName + '</span></h6></div></div>');
+                } else {
+                    headerelem.append('<div class="row optionrow"><div class="col-md-1"><div className="form-check form-switch"><input className="form-check-input switchelem" type="checkbox" role="switch" /></div></div><div class="col-md-10"><h6><span class="badge bg-secondary">' + this.nodeName + '</span></h6></div></div>');
+
+                }
                 if (this.nodeName.toLowerCase() !== "hr" && this.nodeName.toLowerCase() !== "img" && this.nodeName.toLowerCase() !== "iframe") {
                     nonattrib.append('<div class="row optionrow"><div class="col-sm-4 text-right">Label text : </div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput contenttxt" type="text" value="' + $(this).html() + '"></div></div>')
                 }
@@ -330,8 +351,6 @@ function App() {
                     if (this.specified) {
                         if (this.name === 'style') {
                             ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input style="line-height: 45px; display: block; width: 100%; overflow-wrap: break-word; word-wrap: break-word;" class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
-                            //console.log(this.ownerElement.style.height);
-                            //console.log(this.ownerElement.style.backgroundColor);
                             // for (let styleElement of this.ownerElement.style) {
                             //   if (styleElement == 'height') {
                             //     ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput" type="text" value="' + this.ownerElement.style.height + '"></div></div>')
@@ -350,7 +369,8 @@ function App() {
                     // NOTE: here we add extra editable options to the UI, but for now we'd not need editing class, style etc. attributes
                     if (this.name !== 'checked' && this.name !== 'class' && this.name !== 'rows' && this.name !== 'style' && this.name !== 'type' && this.name !== 'allowfullscreen') {
                         if (this.name !== 'placeholder' || this.value === 'PLACEHOLDER') {
-                            if (this.name !== 'id' && this.name !== 'name' && this.name !== 'for') {
+                            if (this.name !== 'id' && this.name !== 'name' && this.name !== 'for' && this.name !== 'placeholder') {
+                                console.log(this.value)
                                 ham.append('<div class="row optionrow"><div class="col-sm-4 text-right the_prop">' + this.name + '</div><div class="col-sm-8"><input class="form-control form-control-sm dynamicInput" type="text" value="' + this.value + '"></div></div>')
                             }
                         }
@@ -413,8 +433,7 @@ function App() {
         let _elems = [...elem];
         _elems = _elems.map(function (a) {
             const inputString = a.toString();
-            const updatedString = inputString.replace(/input-group/g, "");
-            return updatedString
+            return  inputString.replace(/input-group/g, "");
         })
         return process(_elems.join(' \n'));
     }
@@ -427,9 +446,9 @@ function App() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-input-with-label');
         return '<div class="row" style="margin-top: 15px;">' +
             '<div class="col-sm-6 input-group">' +
-            '<label class="cp-label cp-input-with-label" for=cp-for-input-with-label-' + numberOfThisElementInDoc + '>LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;">' +
-            '<input type="text" name=cp-input-name-with-label-' + numberOfThisElementInDoc + ' id=cp-id-input-with-label-' + numberOfThisElementInDoc + ' class="form-control" style="width: 100%;" placeholder="PLACEHOLDER"/>' +
-            '<span id=cp-span-input-with-label-' + numberOfThisElementInDoc + ' class="help-block">HELP TEXT' +
+            '<label class="cp-label cp-input-with-label checked" for=cp-for-input-with-label-' + numberOfThisElementInDoc + '>LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;">' +
+            '<input type="text" name=cp-input-name-with-label-' + numberOfThisElementInDoc + ' id=cp-id-input-with-label-' + numberOfThisElementInDoc + ' class="form-control" style="width: 100%;" placeholder="PLACEHOLDER" value=""/>' +
+            '<span id=cp-span-input-with-label-' + numberOfThisElementInDoc + ' class="help-block checked">HELP TEXT' +
             '</span>' +
             '</div>' +
             '</div>';
@@ -437,9 +456,9 @@ function App() {
 
     function createDateInputWithLabel() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-date-input-with-label');
-        return '<div class="row cp-date-input-with-label" style="margin-top: 15px;">' +
+        return '<div class="row cp-date-input-with-label checked" style="margin-top: 15px;">' +
             '<div class="col-sm-6 input-group">' +
-            '<label class="cp_label" for=cp-for-date-input-with-label-' + numberOfThisElementInDoc + '>LABEL' +
+            '<label class="cp_label cp-date-input-with-label checked" for=cp-for-date-input-with-label-' + numberOfThisElementInDoc + '>LABEL' +
             '</label>' +
             '</div>' +
             '<div class="col-sm-6 input-group" style="margin-top: 15px;">' +
@@ -454,18 +473,19 @@ function App() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-select-with-label');
         let numberOfSelect = elementCounterByClassName('cp-select');
         let numberOfSelectOption = elementCounterByClassName('cp-select-option');
-        return '<div class="row cp-select-with-label" id=cp-select-id-' + numberOfThisElementInDoc + ' style="margin-top: 15px;">' +
-            '<div class="col-sm-6 input-group">' +
-            '<label class="cp_label" for="ID/NAME">LABEL' +
+        return '<div class="row cp-select-with-label checked" id=cp-select-id-' + numberOfThisElementInDoc + ' style="margin-top: 15px;">' +
+            '<div class="col-sm-6 input-group checked">' +
+            '<label class="cp_label input-group checked" for="ID/NAME">LABEL' +
             '</label>' +
             '</div>' +
             '<div class="col-sm-6 input-group" style="margin-top: 15px;">' +
-            '<select class="form-control input-group cp-select" name=cp-select-name' + numberOfThisElementInDoc + '-' + numberOfSelect + ' id=cp-select-id' + numberOfThisElementInDoc + '-' + numberOfSelect + '>' +
-            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption + ' value="VALUE">VALUE' +
+            '<select class="form-control input-group cp-select checked" name=cp-select-name' + numberOfThisElementInDoc + '-' + numberOfSelect + ' id=cp-select-id' + numberOfThisElementInDoc + '-' + numberOfSelect + '>' +
+            '<option class="cp-select-option checked" value="VALUE">VALUE' +
             '</option>' +
-            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption + ' value="VALUE">VALUE' +
+            '<option class="cp-select-option checked" value="VALUE">VALUE' +
             '</option>' +
-            '<option class="cp-select-option" id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption + ' value="VALUE">VALUE' +
+            '<option class="cp-select-option checked" value="VALUE">VALUE' +
+            //*id=cp-select-option-id' + numberOfThisElementInDoc + '-' + numberOfSelectOption + '
             '</option>' +
             '</select>' +
             '</div>' +
@@ -476,7 +496,7 @@ function App() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-text-area-input-with-label');
         return '<div class="row" style="margin-top: 15px;">' +
             '<div class="col-sm-12 input-group">' +
-            '<label class="cp_label cp-text-area-input-with-label" for=cp-for-text-area-with-label-' + numberOfThisElementInDoc + '>LABEL' +
+            '<label class="cp_label cp-text-area-input-with-label checked" for=cp-for-text-area-with-label-' + numberOfThisElementInDoc + '>LABEL' +
             '</label>' +
             '<textarea class="form-control" name=cp-name-text-area-with-label-' + numberOfThisElementInDoc + ' id=cp-id-text-area-with-label-' + numberOfThisElementInDoc + ' rows="3" style="width: 100%;">' +
             '</textarea>' +
@@ -488,7 +508,7 @@ function App() {
         let numberOfThisElementInDoc = elementCounterByClassName('cd-radio-element');
         return '<div class="row cd-radio-element" id=cp-checkbox-id-' + numberOfThisElementInDoc + ' style="margin-top: 15px;">' +
             '<div class="col-sm-6 input-group">' +
-            '<p class="cp_label">LABEL' +
+            '<p class="cp_label checked">LABEL' +
             '</p>' +
             '</div>' +
             '<div class="col-sm-6" style="margin-top: 15px;">' +
@@ -501,9 +521,9 @@ function App() {
 
     function createCheckboxInputWithLabel() {
         let numberOfThisElementInDoc = elementCounterByClassName('cp-checkbox-element');
-        return '<div class="row cp-checkbox-element" id=cp-checkbox-id-' + numberOfThisElementInDoc + ' style="margin-top: 15px;">' +
+        return '<div class="row cp-checkbox-element checked" id=cp-checkbox-id-' + numberOfThisElementInDoc + ' style="margin-top: 15px;">' +
             '<div class="col-sm-6 input-group">' +
-            '<p class="cp_label">LABEL' +
+            '<p class="cp_label checked">LABEL' +
             '</p>' +
             '</div>' +
             '<div class="col-sm-6" style="margin-top: 15px;">' +
@@ -546,7 +566,6 @@ function App() {
 
         // Select inputs
         createSelectWithLabel(),
-        //'<div class="row" style="margin-top: 15px;"><div class="col-sm-6 input-group"><label class="cp_label" for="ID/NAME">LABEL</label></div><div class="col-sm-6 input-group" style="margin-top: 15px;"><select class="form-control input-group" name="ID/NAME" id="ID/NAME"><option value="--">Select</option><option value="VALUE">VALUE</option><option value="VALUE">VALUE</option></select></div></div>'
     ]
 
     return (
@@ -558,7 +577,6 @@ function App() {
                     <div
                         className='dustbin'
                         onDragEnter={(e) => {
-                            //console.log(dragPosition.current);
                             dragPosition.current = -1;
                             if (!$(e.target).hasClass('dustact')) $(e.target).addClass('dustact')
                         }}
@@ -670,7 +688,7 @@ function App() {
                                         key={i}
                                     >
                                         <div
-                                            className="input_elem indragitem"
+                                            className="input_elem indragitem right"
                                             draggable="true"
                                             onClick={(e) => handleDetails(e, i)}
                                             onDragStart={(e) => dragItem.current = i}
