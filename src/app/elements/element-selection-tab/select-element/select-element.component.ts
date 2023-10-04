@@ -25,9 +25,7 @@ export class SelectElementComponent implements ElementType, OnInit {
     this.selectOptionValues = ['VALUE1', 'VALUE2', 'VALUE3'];
   }
 
-  ngOnInit() {
-    //this.dataService.currentNumberOfSelectOptions.subscribe(observedData => this.selectOptionValues = observedData);
-  }
+  ngOnInit() {}
 
   generateHtml(){
     return ' <div class="row cp_select-with-label checked" style="margin-top: 15px;">\n' +
@@ -46,7 +44,7 @@ export class SelectElementComponent implements ElementType, OnInit {
     let options = '';
     for (let i = 0; i < this.selectOptionValues.length; i++) {
 
-      options += '    <option class="cp-select-option checked" value="VALUE">' + this.selectOptionValues[i] + '\n' +
+      options += '    <option class="cp-select-option checked" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '\n' +
       '    </option>\n'
     }
     return options;
@@ -60,6 +58,7 @@ export class SelectElementComponent implements ElementType, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result[0] !== '') {
         this.label = result[0];
+        this.selectOptionValues = result[1]
         this.htmlValue = this.generateHtml();
         this.updateHtml.emit({
           label: this.label,

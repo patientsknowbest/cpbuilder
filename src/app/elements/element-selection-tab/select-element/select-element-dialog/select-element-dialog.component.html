@@ -5,10 +5,9 @@
   <button (click)="removeOption()">Remove option</button>
 </div>
 <div *ngFor="let option of selectOptionValues; let i=index"> Option text
-  <input [value]="" [(ngModel)]="selectOptionValues[i]"><br>
-
+  <input value="" [(ngModel)]="bufferArray[i]"><br>
 </div>
 <div mat-dialog-actions>
-  <button [mat-dialog-close]="[label, selectOptionValues]">Save</button>
+  <button (click)="fillUpBufferArray()" [mat-dialog-close]="[label, selectOptionValues]">Save</button>
   <button [mat-dialog-close]="">Cancel</button>
 </div>

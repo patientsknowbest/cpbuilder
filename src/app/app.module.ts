@@ -15,7 +15,6 @@ import {
 } from './elements/element-selection-tab/input-element/input-element-dialog/input-element-dialog.component'
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
-import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {Service} from "./service/service";
 import {
@@ -44,7 +43,7 @@ import {RouteReuseStrategy} from "@angular/router";
 import { BackToTopComponent } from './elements/element-selection-tab/back-to-top/back-to-top.component';
 import {PreviewComponent, SafeHtmlPipe} from './preview/preview.component';
 import { CheckboxComponent } from './elements/element-selection-tab/checkbox-element/checkbox/checkbox.component';
-
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [

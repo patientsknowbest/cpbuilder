@@ -55,9 +55,6 @@ export class ElementsComponent implements OnInit {
       component.instance.helpText = h.helpText;
     })
 
-    // component.instance.moveUpElement.subscribe((elem: any ) => {
-    //   this.moveComponentUp(elem.position, elem.name)
-    // })
     component.instance.name = uniqueName;
     component.instance.position = this.indexNumber;
     this.components.set(uniqueName, component);

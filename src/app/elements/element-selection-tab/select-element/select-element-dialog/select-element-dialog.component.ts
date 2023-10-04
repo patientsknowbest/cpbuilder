@@ -1,8 +1,11 @@
-import {Component, ComponentRef, Inject, Injectable, OnInit} from '@angular/core';
+import {
+  Component,
+  Inject,
+  Injectable,
+  OnInit,
+} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../../input-element/input-element-dialog/input-element-dialog.component";
-import {Service} from "../../../../service/service";
-import {ElementsComponent} from "../../../elements.component";
 
 @Component({
   selector: 'app-select-element-dialog',
@@ -11,19 +14,29 @@ import {ElementsComponent} from "../../../elements.component";
 })
 @Injectable()
 export class SelectElementDialogComponent implements OnInit{
+
   public label: string;
   public selectOptionValues: string[] = [];
+  public bufferArray: string[] = [];
   private currentIndex:number;
 
-  constructor(public dialogRef: MatDialogRef<SelectElementDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private dataService: Service) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.label = data.label;
     this.selectOptionValues = data.selectOptionValues;
     this.currentIndex = 0;
   }
 
   ngOnInit() {
+    for (let i = 0; i < this.selectOptionValues.length; i++) {
+      this.bufferArray.push(this.selectOptionValues[i])
+    }
   }
 
+  fillUpBufferArray(){
+  for (let i = 0; i < this.bufferArray.length; i++) {
+    this.selectOptionValues[i] = this.bufferArray[i]
+  }
+}
 
   addOption(){
     this.selectOptionValues.push('VALUE' + (this.selectOptionValues.length + 1));
@@ -32,6 +45,7 @@ export class SelectElementDialogComponent implements OnInit{
   removeOption(){
     if (this.selectOptionValues.length > 1) {
       this.selectOptionValues.splice(-1);
+      this.bufferArray.splice(-1);
     }
   }
 }
