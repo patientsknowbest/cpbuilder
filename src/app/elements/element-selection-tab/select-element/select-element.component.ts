@@ -28,12 +28,12 @@ export class SelectElementComponent implements ElementType, OnInit {
 
   generateHtml(){
     return ' <div class="row cp_select-with-label" style="margin-top: 15px;">\n' +
-    '  <div class="col-sm-6 input-group checked">\n' +
-    '   <label class="cp_label input-group checked">' + this.label +
+    '  <div class="col-sm-6 input-group">\n' +
+    '   <label class="cp_label input-group">' + this.label +
     '   </label>\n' +
     '  </div>\n' +
     '  <div class="col-sm-6 input-group" style="margin-top: 15px;">\n' +
-    '   <select class="form-control input-group cp_select checked" >\n' + this.generateOptions() +
+    '   <select class="form-control input-group cp_select" >\n' + this.generateOptions() +
     '   </select>\n' +
     '  </div>\n' +
     ' </div>\n'
@@ -43,7 +43,7 @@ export class SelectElementComponent implements ElementType, OnInit {
     let options = '';
     for (let i = 0; i < this.selectOptionValues.length; i++) {
       console.log('selectOptionValues[i]: ' + this.selectOptionValues[i])
-      options += '    <option class="cp-select-option checked" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '\n' +
+      options += '    <option class="cp-select-option" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '\n' +
       '    </option>\n'
     }
     return options;

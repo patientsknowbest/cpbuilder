@@ -24,9 +24,9 @@ export class CheckboxElementComponent implements ElementType {
     this.label = 'LABEL';}
 
   generateHtml() {
-    return ' <div class="row cp_checkbox-element checked" style="margin-top: 15px;">\n' +
+    return ' <div class="row cp_checkbox-element" style="margin-top: 15px;">\n' +
       '  <div class="col-sm-6 cp_input-group">\n' +
-      '   <p class="cp_label checked">\n' + this.label +
+      '   <p class="cp_label">\n' + this.label +
       '   </p>\n' +
       '  </div>\n' +
       '   <div class="col-sm-6" style="margin-top: 15px;">\n' +
@@ -55,7 +55,7 @@ export class CheckboxElementComponent implements ElementType {
   generateCheckboxes() {
     let options = '';
     for (let i = 0; i < this.checkBoxValues.length; i++) {
-      options += '    <div><input class="form-check-input form-control" type="checkbox" value="' + this.checkBoxValues[i] + ' required"><label class="cp_label col-xs-10 pull-right checked">' + this.checkBoxValues[i] + '</label></div>\n';
+      options += '    <div><input class="form-check-input form-control" type="checkbox" value="' + this.checkBoxValues[i] + ' required"><label class="cp_label col-xs-10 pull-right">' + this.checkBoxValues[i] + '</label></div>\n';
     }
     return options;
   }

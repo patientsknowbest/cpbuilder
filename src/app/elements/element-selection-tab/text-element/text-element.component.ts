@@ -21,7 +21,7 @@ export class TextElementComponent implements ElementType {
   generateHtml(){
     return '   <div class="row" style="margin-top: 15px;">\n' +
       '    <div class="col-sm-12 input-group">\n' +
-      '      <label class="cp_label cp-text-area-input-with-label checked" >' + this.label +
+      '      <label class="cp_label cp-text-area-input-with-label" >' + this.label +
       '      </label>\n' +
       '      <textarea class="form-control" rows="3" style="width: 100%;"></textarea>\n' +
       '    </div>\n' +

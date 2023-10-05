@@ -22,7 +22,7 @@ export class RadioElementComponent implements ElementType {
   generateHtml() {
     return ' <div class="row cp_radio-element" style="margin-top: 15px;">\n' +
       '  <div class="col-sm-6 input-group">\n' +
-      '   <p class="cp_label checked">\n' + this.label +
+      '   <p class="cp_label">\n' + this.label +
       '   </p>\n' +
       '  </div>\n' + this.generateRadioOptions() +
       ' </div>\n'
@@ -52,8 +52,8 @@ export class RadioElementComponent implements ElementType {
     console.log(this.radioButtonValues)
     for (let i = 0; i < this.radioButtonValues.length; i++) {
       options +=       '  <div class="form-check input-group">\n' +
-          '    <input class="cp_input form-check-input col-xs-1 checked" type="radio" name="cp-radio-button-element-name" value="'+ this.radioButtonValues[i] + '">\n' +
-          '    <label class="cp_label form-check-label col-xs-10 checked" value="' + this.radioButtonValues[i] +'">' + this.radioButtonValues[i] + '</label>\n' +
+          '    <input class="cp_input form-check-input col-xs-1" type="radio" name="cp-radio-button-element-name" value="'+ this.radioButtonValues[i] + '">\n' +
+          '    <label class="cp_label form-check-label col-xs-10" value="' + this.radioButtonValues[i] +'">' + this.radioButtonValues[i] + '</label>\n' +
           '  </div>\n';
     }
     return options;
