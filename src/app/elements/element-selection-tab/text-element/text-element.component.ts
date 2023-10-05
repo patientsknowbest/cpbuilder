@@ -40,19 +40,23 @@ export class TextElementComponent implements ElementType {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(TextElementDialogComponent, {
-      data: {label: this.label},
-    });
+    if (!this.elementComponent.isDialogOpen) {
+      this.elementComponent.changeDialogOpenSate();
+      const dialogRef = this.dialog.open(TextElementDialogComponent, {
+        data: {label: this.label},
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result[0] !== '') {
-        this.label = result[0];
-        this.htmlValue = this.generateHtml();
-        this.updateHtml.emit({
-          label: this.label,
-        })
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        this.elementComponent.changeDialogOpenSate();
+        if (result[0] !== '') {
+          this.label = result[0];
+          this.htmlValue = this.generateHtml();
+          this.updateHtml.emit({
+            label: this.label,
+          })
+        }
+      });
+    }
   }
 
   removeElement() {
