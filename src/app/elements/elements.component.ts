@@ -19,7 +19,8 @@ export class ElementsComponent implements OnInit {
 
   public components = new Map<string, ComponentRef<any>>();
   private indexNumber = 0;
-  public compts: any[] = []
+  public isDialogOpen: boolean = false;
+
   private componentTypes: any = {
     textType: 'textElementComponent',
     inputType: 'inputElementComponent',
@@ -55,9 +56,6 @@ export class ElementsComponent implements OnInit {
       component.instance.helpText = h.helpText;
     })
 
-    // component.instance.moveUpElement.subscribe((elem: any ) => {
-    //   this.moveComponentUp(elem.position, elem.name)
-    // })
     component.instance.name = uniqueName;
     component.instance.position = this.indexNumber;
     this.components.set(uniqueName, component);
@@ -134,6 +132,10 @@ export class ElementsComponent implements OnInit {
     }
     // @ts-ignore
     return actualType;
+  }
+
+  changeDialogOpenSate(){
+    this.isDialogOpen = !this.isDialogOpen;
   }
 
   deleteComponent(componentName: string) {

@@ -1,12 +1,12 @@
-<div class="row cp-checkbox-element checked" style="margin-top: 15px;"
+<div class="row cp-checkbox-element" style="margin-top: 15px;"
      [ngStyle]="{'order': position}">
   <div class="col-sm-6 input-group">
-    <p class="cp_label checked">{{label}}
+    <p class="cp_label">{{label}}
     </p>
   </div>
   <div class="col-sm-6" style="margin-top: 15px;">
     <div class="form-check input-group"*ngFor="let option of checkBoxValues; let i=index" value=>
-      <input class="form-check-input col-xs-1 checked" type="checkbox" name="cp-radio-button-element-name" value="VALUE">{{checkBoxValues[i]}}
+      <input class="form-check-input col-xs-1" type="checkbox" name="cp-radio-button-element-name" value="VALUE">{{checkBoxValues[i]}}
     </div>
   </div>
   <button (click)="openDialog()">EDIT</button>

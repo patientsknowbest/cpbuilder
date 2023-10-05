@@ -15,46 +15,52 @@ export class RadioElementComponent implements ElementType {
   @Output() removedElement = new EventEmitter<any>();
   @Output() updateHtml = new EventEmitter<any>();
   @Output() moveUpElement = new EventEmitter<any>();
-  inputValues:string[] = [];
   label:string = 'LABEL';
+  radioButtonValues:string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
   htmlValue = this.generateHtml();
 
   generateHtml() {
     return ' <div class="row cp_radio-element" style="margin-top: 15px;">\n' +
       '  <div class="col-sm-6 input-group">\n' +
-      '   <p class="cp_label checked">\n' + this.label +
+      '   <p class="cp_label">\n' + this.label +
       '   </p>\n' +
-      '  </div>\n' +
-      '  <div class="col-sm-6" style="margin-top: 15px;">\n' +
-      '   <div class="form-check input-group">\n' +
-      '     <input class="cp_input form-check-input col-xs-1 checked" type="radio" name="cp-radio-button-element-name" value="VALUE">\n' +
-      '     <label class="cp_label form-check-label col-xs-10 checked" > VALUE</label>\n' +
-      '   </div>\n' +
-      '  </div>\n' +
-      '  <div class="form-check input-group">\n' +
-      '    <input class="cp_input form-check-input col-xs-1 checked" type="radio" name="cp-radio-button-element-name" value="VALUE">\n' +
-      '    <label class="cp_label form-check-label col-xs-10 checked" > VALUE</label>\n' +
-      '  </div>\n' +
+      '  </div>\n' + this.generateRadioOptions() +
       ' </div>\n'
   }
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
     this.label = 'LABEL';
-    this.inputValues = ['VALUE1', 'VALUE2', 'VALUE3'];}
+    this.radioButtonValues = ['VALUE1', 'VALUE2', 'VALUE3'];}
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(RadioElementDialogComponent, {
-      data: {label: this.label, inputValues: this.inputValues},
-    });
+    if (!this.elementComponent.isDialogOpen) {
+      this.elementComponent.changeDialogOpenSate();
+      const dialogRef = this.dialog.open(RadioElementDialogComponent, {
+        data: {label: this.label, inputValues: this.radioButtonValues},
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result[0] !== '') {
-        this.label = result[0];
-        this.htmlValue = this.generateHtml();
-        this.updateHtml.emit({
-          label: this.label,
-        })
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        this.elementComponent.changeDialogOpenSate();
+        if (result[0] !== '') {
+          this.label = result[0];
+          this.htmlValue = this.generateHtml();
+          this.updateHtml.emit({
+            label: this.label,
+          })
+        }
+      });
+    }
+  }
+
+  generateRadioOptions(){
+    let options = '';
+    console.log(this.radioButtonValues)
+    for (let i = 0; i < this.radioButtonValues.length; i++) {
+      options +=       '  <div class="form-check input-group">\n' +
+          '    <input class="cp_input form-check-input col-xs-1" type="radio" name="cp-radio-button-element-name" value="'+ this.radioButtonValues[i] + '">\n' +
+          '    <label class="cp_label form-check-label col-xs-10" value="' + this.radioButtonValues[i] +'">' + this.radioButtonValues[i] + '</label>\n' +
+          '  </div>\n';
+    }
+    return options;
   }
 
   removeElement() {

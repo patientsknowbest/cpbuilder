@@ -1,12 +1,15 @@
 <div><h1 mat-dialog-title>Edit Input Field</h1>
-  <label>Label</label>
-  <input matInput [(ngModel)]="label" value=""><br>
-  <div *ngFor="let option of checkBoxValues; let i=index"> Option text
-    <input [value]="" [(ngModel)]="checkBoxValues[i]"><br>
-  </div>
-  <div mat-dialog-actions>
-    <button [mat-dialog-close]="[label, checkBoxValues]">Save</button>
+    <label>Label</label>
+    <input matInput [(ngModel)]="label" value=""><br>
+    <button (click)="addCheckbox()">Add option</button>
+</div>
+<div *ngFor="let checkBox of checkBoxValues; let i=index"> Option text
+    <input value="" [(ngModel)]="bufferCheckBoxValues[i]">
+    <button *ngIf="checkBoxValues.length > 1" (click)="removeCheckbox(i)"> REMOVE</button>
+    <br>
+</div>
+<div mat-dialog-actions>
+    <button (click)="populatingCheckBoxValues()" [mat-dialog-close]="[label, checkBoxValues]">Save</button>
     <button [mat-dialog-close]="">Cancel</button>
-  </div>
 </div>
 
