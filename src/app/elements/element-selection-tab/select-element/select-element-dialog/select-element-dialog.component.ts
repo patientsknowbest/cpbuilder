@@ -13,28 +13,23 @@ import {DialogData} from "../../input-element/input-element-dialog/input-element
   styleUrls: ['./select-element-dialog.component.css']
 })
 @Injectable()
-export class SelectElementDialogComponent implements OnInit{
+export class SelectElementDialogComponent {
 
   public label: string;
   public selectOptionValues: string[] = [];
-  public bufferArray: string[] = [];
+  public bufferOptionValues: string[] = [];
   private currentIndex:number;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.label = data.label;
     this.selectOptionValues = data.selectOptionValues;
+    this.bufferOptionValues = [...this.selectOptionValues]
     this.currentIndex = 0;
   }
 
-  ngOnInit() {
-    for (let i = 0; i < this.selectOptionValues.length; i++) {
-      this.bufferArray.push(this.selectOptionValues[i])
-    }
-  }
-
-  fillUpBufferArray(){
-  for (let i = 0; i < this.bufferArray.length; i++) {
-    this.selectOptionValues[i] = this.bufferArray[i]
+  populatingOptionValues(){
+  for (let i = 0; i < this.bufferOptionValues.length; i++) {
+    this.selectOptionValues[i] = this.bufferOptionValues[i]
   }
 }
 
@@ -42,10 +37,11 @@ export class SelectElementDialogComponent implements OnInit{
     this.selectOptionValues.push('VALUE' + (this.selectOptionValues.length + 1));
   }
 
-  removeOption(){
+  removeOption(indexOfTheElement: number){
+    console.log(indexOfTheElement)
     if (this.selectOptionValues.length > 1) {
-      this.selectOptionValues.splice(-1);
-      this.bufferArray.splice(-1);
+      this.selectOptionValues.splice(indexOfTheElement,1);
+      this.bufferOptionValues.splice(indexOfTheElement, 1);
     }
   }
 }

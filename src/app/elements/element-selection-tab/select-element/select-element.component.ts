@@ -17,18 +17,17 @@ export class SelectElementComponent implements ElementType, OnInit {
   @Output() removedElement = new EventEmitter<any>();
   @Output() updateHtml = new EventEmitter<any>();
   label:string = 'LABEL';
-  selectOptionValues:string[] = [];
+  selectOptionValues:string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
   htmlValue = this.generateHtml();
 
   constructor(public dialog: MatDialog, private dataService: Service, public elementComponent: ElementsComponent) {
     this.label = 'LABEL';
-    this.selectOptionValues = ['VALUE1', 'VALUE2', 'VALUE3'];
   }
 
   ngOnInit() {}
 
   generateHtml(){
-    return ' <div class="row cp_select-with-label checked" style="margin-top: 15px;">\n' +
+    return ' <div class="row cp_select-with-label" style="margin-top: 15px;">\n' +
     '  <div class="col-sm-6 input-group checked">\n' +
     '   <label class="cp_label input-group checked">' + this.label +
     '   </label>\n' +
@@ -42,8 +41,9 @@ export class SelectElementComponent implements ElementType, OnInit {
 
   generateOptions() {
     let options = '';
+    console.log('selectOptionValues[i]: ' + this.selectOptionValues)
     for (let i = 0; i < this.selectOptionValues.length; i++) {
-
+      console.log('selectOptionValues[i]: ' + this.selectOptionValues[i])
       options += '    <option class="cp-select-option checked" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '\n' +
       '    </option>\n'
     }
@@ -58,7 +58,7 @@ export class SelectElementComponent implements ElementType, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result[0] !== '') {
         this.label = result[0];
-        this.selectOptionValues = result[1]
+        //this.selectOptionValues = result[1]
         this.htmlValue = this.generateHtml();
         this.updateHtml.emit({
           label: this.label,
