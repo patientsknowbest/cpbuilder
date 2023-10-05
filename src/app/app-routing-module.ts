@@ -5,6 +5,7 @@ import {GenerateComponent} from "./generate/generate.component";
 import {PreviewComponent} from "./preview/preview.component"; // CLI imports router
 
 const routes: Routes = [
+  { path: '', redirectTo: 'elements-component', pathMatch: 'full'},
   { path: 'elements-component', component: ElementsComponent },
   { path: 'generate-component', component: GenerateComponent },
   { path: 'preview-component', component: PreviewComponent }

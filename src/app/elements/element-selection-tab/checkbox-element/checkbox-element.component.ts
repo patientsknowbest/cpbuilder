@@ -17,46 +17,51 @@ export class CheckboxElementComponent implements ElementType {
   @Output() updateHtml = new EventEmitter<any>();
   @Output() moveUpElement = new EventEmitter<any>();
   label: string = 'LABEL';
+  checkBoxValues:string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
   htmlValue = this.generateHtml();
-  checkBoxValues:string[] = [];
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
-    this.label = 'LABEL';
-    this.checkBoxValues = ['VALUE1', 'VALUE2', 'VALUE3'];}
+    this.label = 'LABEL';}
 
   generateHtml() {
-    return ' <div class="row cp_checkbox-element checked" style="margin-top: 15px;">\n' +
+    return ' <div class="row cp_checkbox-element" style="margin-top: 15px;">\n' +
       '  <div class="col-sm-6 cp_input-group">\n' +
-      '   <p class="cp_label checked">\n' + this.label +
+      '   <p class="cp_label">\n' + this.label +
       '   </p>\n' +
       '  </div>\n' +
       '   <div class="col-sm-6" style="margin-top: 15px;">\n' +
-      '    <div class="form-check col-xs-12 pull-left input-group">\n' +
-      '     <input class="form-check-input form-control checked" type="checkbox" name="cp_checkbox-element-name" value="VALUE"/>\n' +
-      '       <label class="cp_label col-xs-10 pull-right checked">\n' + '</label>\n' +
-      '    </div>\n' +
-      '   </div>\n' +
-      '   <div class="form-check col-xs-12 pull-left input-group">\n' +
-      '    <input class="form-check-input form-control checked" type="checkbox" name="cp_checkbox-element-name" value="VALUE"/>\n' +
-      '    <label class="cp_label col-xs-10 pull-right checked">\n' + '</label>\n' +
+      '       <div class="form-check col-xs-12 pull-left input-group">\n' + this.generateCheckboxes() +
+      '       </div>\n' +
       '   </div>\n' +
       '  </div>\n';
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(CheckboxElementDialogComponent, {
-      data: {label: this.label, checkBoxValues: this.checkBoxValues},
-    });
+    if (!this.elementComponent.isDialogOpen) {
+      this.elementComponent.changeDialogOpenSate();
+      const dialogRef = this.dialog.open(CheckboxElementDialogComponent, {
+        data: {label: this.label, checkBoxValues: this.checkBoxValues},
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result[0] !== '') {
-        this.label = result[0];
-        this.htmlValue = this.generateHtml();
-        this.updateHtml.emit({
-          label: this.label,
-        })
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        this.elementComponent.changeDialogOpenSate();
+        if (result[0] !== '') {
+          this.label = result[0];
+          this.htmlValue = this.generateHtml();
+          this.updateHtml.emit({
+            label: this.label,
+          })
+        }
+      });
+    }
+  }
+
+  generateCheckboxes() {
+    let options = '';
+    for (let i = 0; i < this.checkBoxValues.length; i++) {
+      options += '    <div><input class="form-check-input form-control" type="checkbox" value="' + this.checkBoxValues[i] + ' required"><label class="cp_label col-xs-10 pull-right">' + this.checkBoxValues[i] + '</label></div>\n';
+    }
+    return options;
   }
 
   removeElement() {
