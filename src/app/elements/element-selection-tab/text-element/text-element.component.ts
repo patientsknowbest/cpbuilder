@@ -21,7 +21,7 @@ export class TextElementComponent implements ElementType {
   generateHtml(){
     return '   <div class="row" style="margin-top: 15px;">\n' +
       '    <div class="col-sm-12 input-group">\n' +
-      '      <label class="cp_label cp-text-area-input-with-label checked" >' + this.label +
+      '      <label class="cp_label cp-text-area-input-with-label" >' + this.label +
       '      </label>\n' +
       '      <textarea class="form-control" rows="3" style="width: 100%;"></textarea>\n' +
       '    </div>\n' +
@@ -40,19 +40,23 @@ export class TextElementComponent implements ElementType {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(TextElementDialogComponent, {
-      data: {label: this.label},
-    });
+    if (!this.elementComponent.isDialogOpen) {
+      this.elementComponent.changeDialogOpenSate();
+      const dialogRef = this.dialog.open(TextElementDialogComponent, {
+        data: {label: this.label},
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result[0] !== '') {
-        this.label = result[0];
-        this.htmlValue = this.generateHtml();
-        this.updateHtml.emit({
-          label: this.label,
-        })
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        this.elementComponent.changeDialogOpenSate();
+        if (result[0] !== '') {
+          this.label = result[0];
+          this.htmlValue = this.generateHtml();
+          this.updateHtml.emit({
+            label: this.label,
+          })
+        }
+      });
+    }
   }
 
   removeElement() {

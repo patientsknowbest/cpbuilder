@@ -28,7 +28,7 @@ export class InputElementComponent implements ElementType {
   generateHtml() {
     return ' <div class="row cp_input-element" style="margin-top: 15px;">\n' +
       '  <div class="col-sm-6 input-group">\n' +
-      '    <label class="cp-label cp-input-with-label checked">' + this.label + '</label></div>\n' +
+      '    <label class="cp-label cp-input-with-label">' + this.label + '</label></div>\n' +
       '  <div class="col-sm-6 input-group" style="margin-top: 15px;">\n' +
       '    <input type="text" class="cp_input form-control" style="width: 100%;" placeholder="' + this.placeholder + '" value=""/>\n' +
       '    <span>' + this.helpText + ' </span>\n' +
@@ -43,30 +43,33 @@ export class InputElementComponent implements ElementType {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(InputElementDialogComponent, {
-      data: {label: this.label, placeholder: this.placeholder, helpText: this.helpText},
-    });
+    if (!this.elementComponent.isDialogOpen) {
+      this.elementComponent.changeDialogOpenSate();
+      const dialogRef = this.dialog.open(InputElementDialogComponent, {
+        data: {label: this.label, placeholder: this.placeholder, helpText: this.helpText},
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(result => {
+        this.elementComponent.changeDialogOpenSate();
+        if (result[0] !== '') {
+          this.label = result[0];
+        }
+        if (result[1] !== '') {
+          this.placeholder = result[1];
+        }
+        if (result[2] !== '') {
+          this.helpText = result[2];
+        }
 
-      if (result[0] !== '') {
-        this.label = result[0];
-      }
-      if (result[1] !== '') {
-        this.placeholder = result[1];
-      }
-      if (result[2] !== '') {
-        this.helpText = result[2];
-      }
 
-
-      this.htmlValue = this.generateHtml();
-      this.updateHtml.emit({
-        placeholder: this.placeholder,
-        label: this.label,
-        helpText: this.helpText
-      })
-    });
+        this.htmlValue = this.generateHtml();
+        this.updateHtml.emit({
+          placeholder: this.placeholder,
+          label: this.label,
+          helpText: this.helpText
+        })
+      });
+    }
   }
 
   removeElement() {

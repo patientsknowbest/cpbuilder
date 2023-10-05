@@ -42,7 +42,6 @@ import {AppReuseStrategy} from "./app.reuse.strategy";
 import {RouteReuseStrategy} from "@angular/router";
 import { BackToTopComponent } from './elements/element-selection-tab/back-to-top/back-to-top.component';
 import {PreviewComponent, SafeHtmlPipe} from './preview/preview.component';
-import { CheckboxComponent } from './elements/element-selection-tab/checkbox-element/checkbox/checkbox.component';
 import {FormsModule} from "@angular/forms";
 
 @NgModule({
@@ -66,8 +65,7 @@ import {FormsModule} from "@angular/forms";
     GenerateComponent,
     BackToTopComponent,
     PreviewComponent,
-    SafeHtmlPipe,
-    CheckboxComponent
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,8 @@ export class ElementsComponent implements OnInit {
 
   public components = new Map<string, ComponentRef<any>>();
   private indexNumber = 0;
-  public compts: any[] = []
+  public isDialogOpen: boolean = false;
+
   private componentTypes: any = {
     textType: 'textElementComponent',
     inputType: 'inputElementComponent',
@@ -131,6 +132,10 @@ export class ElementsComponent implements OnInit {
     }
     // @ts-ignore
     return actualType;
+  }
+
+  changeDialogOpenSate(){
+    this.isDialogOpen = !this.isDialogOpen;
   }
 
   deleteComponent(componentName: string) {
