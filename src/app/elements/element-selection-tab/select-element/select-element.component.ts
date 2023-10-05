@@ -41,7 +41,6 @@ export class SelectElementComponent implements ElementType, OnInit {
 
   generateOptions() {
     let options = '';
-    console.log('selectOptionValues[i]: ' + this.selectOptionValues)
     for (let i = 0; i < this.selectOptionValues.length; i++) {
       console.log('selectOptionValues[i]: ' + this.selectOptionValues[i])
       options += '    <option class="cp-select-option checked" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '\n' +

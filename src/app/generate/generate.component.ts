@@ -25,12 +25,21 @@ constructor(private dataService: Service) {
   '    .cp_whiteBox {background-color:#ffffff; padding:15px; margin-bottom:10px; margin-top:10px; border-radius: 10px; border: 3px solid #014151;}\n' +
   '  </style>' +
   '    <div class="cp_whiteBox">'];
+
     if (this.mappedComponents.size > 0) {
-      this.mappedComponents.forEach(function(value, key)  {
-         concatenatedCode.push(value.instance.htmlValue);
-         let actualCode = ''
-         let s = function (){concatenatedCode.forEach((d)=> {actualCode+=d})}
-      });
+      let sortedComponentRefs: any = [];
+
+      this.mappedComponents.forEach((a,v) => {
+        let pos = a.instance?.position
+        sortedComponentRefs[pos] = a;
+      })
+
+      for (let i = 0; i < sortedComponentRefs.length; i++) {
+        concatenatedCode.push(sortedComponentRefs[i].instance.htmlValue);
+        let actualCode = ''
+        let s = function (){concatenatedCode.forEach((d)=> {actualCode+=d})}
+      }
+
       concatenatedCode.push('</div>\n</div>');
       let finalHtmlCode = concatenatedCode.join("\r\n")
       concatenatedCode.shift()
