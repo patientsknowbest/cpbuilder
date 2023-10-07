@@ -75,7 +75,7 @@ import {FormsModule} from "@angular/forms";
     MatInputModule,
     AppRoutingModule,
   ],
-  providers: [ElementType, Service, {provide: RouteReuseStrategy, useClass: AppReuseStrategy}, SafeHtmlPipe],
+  providers: [ElementType, Service, {provide: RouteReuseStrategy, useClass: AppReuseStrategy}, SafeHtmlPipe, GenerateComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

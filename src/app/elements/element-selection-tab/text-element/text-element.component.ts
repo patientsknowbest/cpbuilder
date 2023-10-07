@@ -19,13 +19,12 @@ export class TextElementComponent implements ElementType {
   htmlValue = this.generateHtml();
 
   generateHtml(){
-    return '   <div class="row" style="margin-top: 15px;">\n' +
-      '    <div class="col-sm-12 input-group">\n' +
-      '      <label class="cp_label cp-text-area-input-with-label" >' + this.label +
-      '      </label>\n' +
-      '      <textarea class="form-control" rows="3" style="width: 100%;"></textarea>\n' +
-      '    </div>\n' +
-      '  </div>\n'
+    return '     <div class="row cp_text-element" style="margin-top: 15px;">\n' +
+      '       <div class="cp_text-element-group">\n' +
+      '          <label class="cp_text-element-label" >' + this.label + '</label>\n' +
+      '          <textarea class="cp_text-element-text-area" rows="3" style="width: 100%;"></textarea>\n' +
+      '       </div>\n' +
+      '    </div>'
   }
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
@@ -41,19 +40,21 @@ export class TextElementComponent implements ElementType {
 
   openDialog(): void {
     if (!this.elementComponent.isDialogOpen) {
-      this.elementComponent.changeDialogOpenSate();
+      this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(TextElementDialogComponent, {
         data: {label: this.label},
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.elementComponent.changeDialogOpenSate();
-        if (result[0] !== '') {
-          this.label = result[0];
-          this.htmlValue = this.generateHtml();
-          this.updateHtml.emit({
-            label: this.label,
-          })
+        this.elementComponent.changeDialogState();
+        if (result.length != 0) {
+          if (result[0] !== '') {
+            this.label = result[0];
+            this.htmlValue = this.generateHtml();
+            this.updateHtml.emit({
+              label: this.label,
+            })
+          }
         }
       });
     }

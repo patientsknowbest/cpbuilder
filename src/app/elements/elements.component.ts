@@ -19,6 +19,7 @@ export class ElementsComponent implements OnInit {
 
   public components = new Map<string, ComponentRef<any>>();
   private indexNumber = 0;
+  private position = 0;
   public isDialogOpen: boolean = false;
 
   private componentTypes: any = {
@@ -31,10 +32,13 @@ export class ElementsComponent implements OnInit {
   }
 
   constructor(private service: Service) {
+    service.currentPosition.subscribe()
   }
 
   ngOnInit() {
     this.service.currentData.subscribe(m => this.components = m);
+    this.service.currentPosition.subscribe(p => this.position = p);
+    this.service.currentIndex.subscribe(i => this.indexNumber = i);
   }
 
   public addComponent(componentName: string) {
@@ -57,48 +61,49 @@ export class ElementsComponent implements OnInit {
     })
 
     component.instance.name = uniqueName;
-    component.instance.position = this.indexNumber;
+    component.instance.position = this.position;
     this.components.set(uniqueName, component);
     this.indexNumber++;
+    this.position++;
   }
 
-  moveComponentDown(currentPosition: number, name: string){
+  moveDown(currentPosition: number, name: string){
     let newPosition = currentPosition + 1;
 
     if (newPosition < this.components.size){
       // @ts-ignore
-      let next : ComponentRef<any> = ComponentRef;
-      for (let i = 0; i < this.components.size; i++) {
-        if (this.components.get(i.toString())?.instance.position === (currentPosition + 1)){
-          next = <ComponentRef<any>>this.components.get(i.toString());
+      let nextElementComponentRef : ComponentRef<any> = ComponentRef;
+      for (let i = 0; i <= this.indexNumber; i++) {
+        if (this.components.get(i.toString())?.instance.position == newPosition){
+          nextElementComponentRef = <ComponentRef<any>>this.components.get(i.toString());
+          break;
         }
       }
       let currentViewRef = <ViewRef>this.components.get(name)?.hostView
       let currentComponent = <ComponentRef<any>>this.components.get(name)
       this.container.move(currentViewRef, newPosition)
       currentComponent.instance.position = newPosition;
-      let positionOfNextElement: number = next.instance.position
-      next.instance.position = positionOfNextElement - 1;
+      nextElementComponentRef.instance.position = currentPosition;
     }
   }
 
-  moveComponentUp(currentPosition: number, name: string){
+  moveUp(currentPosition: number, name: string){
     let newPosition = currentPosition - 1;
 
     if (newPosition >= 0){
       // @ts-ignore
-      let next : ComponentRef<any> = ComponentRef;
-      for (let i = 0; i < this.components.size; i++) {
+      let nextElementComponentRef : ComponentRef<any> = ComponentRef;
+      for (let i = 0; i < this.indexNumber; i++) {
         if (this.components.get(i.toString())?.instance.position === (currentPosition - 1)){
-          next = <ComponentRef<any>>this.components.get(i.toString());
+          nextElementComponentRef = <ComponentRef<any>>this.components.get(i.toString());
+          break;
         }
       }
       let currentViewRef = <ViewRef>this.components.get(name)?.hostView
       let currentComponent = <ComponentRef<any>>this.components.get(name)
       this.container.move(currentViewRef, newPosition)
       currentComponent.instance.position = newPosition;
-      let positionOfNextElement: number = next.instance.position
-      next.instance.position = positionOfNextElement + 1;
+      nextElementComponentRef.instance.position = currentPosition;
     }
   }
 
@@ -134,15 +139,21 @@ export class ElementsComponent implements OnInit {
     return actualType;
   }
 
-  changeDialogOpenSate(){
+  changeDialogState(){
     this.isDialogOpen = !this.isDialogOpen;
   }
 
   deleteComponent(componentName: string) {
-    if (this.components.has(componentName)) {
+    let currentPositionOfElementToDelete = this.components.get(componentName)?.instance.position;
+
+      this.components.forEach(value => {
+        if (value.instance.position > currentPositionOfElementToDelete){
+          value.instance.position = value.instance.position - 1;
+        }
+      })
       this.components.get(componentName)?.destroy();
       this.components.delete(componentName);
-    }
+      this.position--;
   }
 }
 

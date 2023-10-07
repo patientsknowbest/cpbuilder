@@ -9,14 +9,26 @@ export class Service{
   private htmlCodeToPreview = new BehaviorSubject(STRING_TYPE.name.toString());
   private myBehaviorSubject = new BehaviorSubject<string>('');
   private numberOfSelectOptions = new BehaviorSubject<string[]>(['VALUE1', 'VALUE2', 'VALUE3']);
+  private index = new BehaviorSubject<number>(0);
+  private position = new BehaviorSubject<number>(0);
 
 
   currentData = this.dataToPass.asObservable();
   currentHtmlCode = this.htmlCodeToPreview.asObservable();
   currentNumberOfSelectOptions = this.numberOfSelectOptions.asObservable();
+  currentIndex = this.index.asObservable();
+  currentPosition = this.position.asObservable();
 
   changeCurrentData(m: Map<string, ComponentRef<any>>) {
     this.dataToPass.next(m)
+  }
+
+  changeIndex(n: number){
+    this.index.next(n);
+  }
+
+  changePosition(n: number){
+    this.position.next(n);
   }
 
   checkHtmlCodeChange(s: string) {

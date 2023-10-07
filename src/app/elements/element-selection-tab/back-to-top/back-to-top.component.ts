@@ -23,7 +23,7 @@ export class BackToTopComponent implements OnInit{
   }
 
   generateHtml() {
-    return ' <button href="#top" class="cp_button-back-to-top" title="Back to Top" >Back to Top</button>\n';
+    return '     <button href="#top" class="cp_button-back-to-top" title="Back to Top" >Back To Top</button>';
   }
 
   constructor(public elementComponent: ElementsComponent) {}

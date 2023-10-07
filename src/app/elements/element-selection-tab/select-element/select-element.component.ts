@@ -27,45 +27,41 @@ export class SelectElementComponent implements ElementType, OnInit {
   ngOnInit() {}
 
   generateHtml(){
-    return ' <div class="row cp_select-with-label" style="margin-top: 15px;">\n' +
-    '  <div class="col-sm-6 input-group">\n' +
-    '   <label class="cp_label input-group">' + this.label +
-    '   </label>\n' +
-    '  </div>\n' +
-    '  <div class="col-sm-6 input-group" style="margin-top: 15px;">\n' +
-    '   <select class="form-control input-group cp_select" >\n' + this.generateOptions() +
-    '   </select>\n' +
-    '  </div>\n' +
-    ' </div>\n'
+    return '     <div class="row cp_select-element" style="margin-top: 15px;">\n' +
+    '          <label class="cp_select-element-label input-group">' + this.label + '</label>\n' +
+    '            <div class="cp_select-element-selection" style="margin-top: 15px;">\n' +
+    '              <select class="cp_select" >' + this.generateOptions() +
+    '              </select>\n' +
+    '          </div>\n' +
+    '     </div>'
   }
 
   generateOptions() {
     let options = '';
     for (let i = 0; i < this.selectOptionValues.length; i++) {
-      console.log('selectOptionValues[i]: ' + this.selectOptionValues[i])
-      options += '    <option class="cp-select-option" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '\n' +
-      '    </option>\n'
+      options += '              <option class="cp_select-option" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '</option>\n'
     }
     return options;
   }
 
   openDialog(): void {
     if (!this.elementComponent.isDialogOpen) {
-      this.elementComponent.changeDialogOpenSate();
+      this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(SelectElementDialogComponent, {
         data: {label: this.label, selectOptionValues: this.selectOptionValues}
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.elementComponent.changeDialogOpenSate();
-        if (result[0] !== '') {
-          this.label = result[0];
-          //this.selectOptionValues = result[1]
-          this.htmlValue = this.generateHtml();
-          this.updateHtml.emit({
-            label: this.label,
-          })
-        }
+        this.elementComponent.changeDialogState();
+        if (result.length != 0){
+            if (result[0] !== '') {
+              this.label = result[0];
+              this.htmlValue = this.generateHtml();
+              this.updateHtml.emit({
+                label: this.label,
+              })
+            }
+          }
       });
     }
   }

@@ -10,7 +10,6 @@ import {GenerateComponent} from "../generate/generate.component";
 export class NavComponent implements OnInit {
 
   private mappedComponents: Map<string, ComponentRef<any>>;
-  private sumHtml: string;
 
   constructor(private dataService: Service) {
   }
@@ -29,5 +28,10 @@ export class NavComponent implements OnInit {
     this.mappedComponents.forEach((a,v) => {
       this.mappedComponents.delete(v)
     })
+    this.dataService.changeIndex(0);
+    this.dataService.changeCurrentData(new Map<string, ComponentRef<any>>())
+    this.dataService.setHtmlValue('')
+    this.dataService.changeIndex(0);
+    this.dataService.changePosition(0);
   }
 }

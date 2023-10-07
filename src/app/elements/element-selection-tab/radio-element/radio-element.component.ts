@@ -20,12 +20,11 @@ export class RadioElementComponent implements ElementType {
   htmlValue = this.generateHtml();
 
   generateHtml() {
-    return ' <div class="row cp_radio-element" style="margin-top: 15px;">\n' +
-      '  <div class="col-sm-6 input-group">\n' +
-      '   <p class="cp_label">\n' + this.label +
-      '   </p>\n' +
-      '  </div>\n' + this.generateRadioOptions() +
-      ' </div>\n'
+    return '     <div class="row cp_radio-element" style="margin-top: 15px;">\n' +
+      '       <div class="cp_radio-element-label input-group">\n' +
+      '         <label class="cp_label">' + this.label + '</label>\n' +
+      '       </div>\n' + this.generateRadioOptions() +
+      '     </div>'
   }
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
     this.label = 'LABEL';
@@ -33,32 +32,33 @@ export class RadioElementComponent implements ElementType {
 
   openDialog(): void {
     if (!this.elementComponent.isDialogOpen) {
-      this.elementComponent.changeDialogOpenSate();
+      this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(RadioElementDialogComponent, {
         data: {label: this.label, inputValues: this.radioButtonValues},
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.elementComponent.changeDialogOpenSate();
-        if (result[0] !== '') {
-          this.label = result[0];
-          this.htmlValue = this.generateHtml();
-          this.updateHtml.emit({
-            label: this.label,
-          })
+        this.elementComponent.changeDialogState();
+        if (result.length != 0) {
+          if (result[0] !== '') {
+            this.label = result[0];
+            this.htmlValue = this.generateHtml();
+            this.updateHtml.emit({
+              label: this.label,
+            })
+          }
         }
-      });
+        });
     }
   }
 
   generateRadioOptions(){
     let options = '';
-    console.log(this.radioButtonValues)
     for (let i = 0; i < this.radioButtonValues.length; i++) {
-      options +=       '  <div class="form-check input-group">\n' +
-          '    <input class="cp_input form-check-input col-xs-1" type="radio" name="cp-radio-button-element-name" value="'+ this.radioButtonValues[i] + '">\n' +
-          '    <label class="cp_label form-check-label col-xs-10" value="' + this.radioButtonValues[i] +'">' + this.radioButtonValues[i] + '</label>\n' +
-          '  </div>\n';
+      options += '         <div class="form-check input-group">\n' +
+          '           <input class="cp_radio-element-input" type="radio" name="cp-radio-button-element-name" value="'+ this.radioButtonValues[i] + '">\n' +
+          '           <label class="cp_radio-element-input-label">' + this.radioButtonValues[i] + '</label>\n' +
+          '       </div>\n';
     }
     return options;
   }

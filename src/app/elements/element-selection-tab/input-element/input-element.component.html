@@ -1,4 +1,4 @@
-<div class="row" style="margin-top: 15px;" [ngStyle]="{'order': position}">
+<div class="row" style="margin-top: 15px;" cdkDropList>
   <div class="col-sm-6 input-group">
     <label class="cp-label cp-input-with-label">{{label}}</label></div>
   <div class="col-sm-6 input-group" style="margin-top: 15px;">
@@ -7,6 +7,6 @@
   </div>
   <button (click)="openDialog()">EDIT</button>
   <button (click)="removeElement()">REMOVE</button>
-  <button (click)="elementComponent.moveComponentDown(position, name)">MOVE DOWN</button>
-  <button (click)="elementComponent.moveComponentUp(position, name)">MOVE UP</button>
+  <button (click)="elementComponent.moveDown(position, name)">MOVE DOWN</button>
+  <button (click)="elementComponent.moveUp(position, name)">MOVE UP</button>
 </div>

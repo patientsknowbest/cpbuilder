@@ -30,7 +30,6 @@ export class RadioElementDialogComponent {
   }
 
   removeRadioButton(indexOfTheElement: number){
-    console.log(indexOfTheElement)
     if (this.radioElementValues.length > 1) {
       this.radioElementValues.splice(indexOfTheElement,1);
       this.bufferRadioElementValues.splice(indexOfTheElement, 1);
