@@ -1,6 +1,5 @@
 import {Component, ComponentRef, OnInit} from '@angular/core';
 import {Service} from "../service/service";
-import {GenerateComponent} from "../generate/generate.component";
 
 @Component({
   selector: 'app-nav',
@@ -10,12 +9,13 @@ import {GenerateComponent} from "../generate/generate.component";
 export class NavComponent implements OnInit {
 
   private mappedComponents: Map<string, ComponentRef<any>>;
-
+  public dialogState = false;
   constructor(private dataService: Service) {
   }
 
   ngOnInit() {
     this.dataService.currentData.subscribe(observedData => this.mappedComponents = observedData);
+    this.dataService.currentDialogState.subscribe(ds => this.dialogState = ds)
   }
 
   emptyingTheEditor() {

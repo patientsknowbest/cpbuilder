@@ -11,6 +11,7 @@ export class Service{
   private numberOfSelectOptions = new BehaviorSubject<string[]>(['VALUE1', 'VALUE2', 'VALUE3']);
   private index = new BehaviorSubject<number>(0);
   private position = new BehaviorSubject<number>(0);
+  private dialogState = new BehaviorSubject<boolean>(false);
 
 
   currentData = this.dataToPass.asObservable();
@@ -18,9 +19,14 @@ export class Service{
   currentNumberOfSelectOptions = this.numberOfSelectOptions.asObservable();
   currentIndex = this.index.asObservable();
   currentPosition = this.position.asObservable();
+  currentDialogState = this.dialogState.asObservable();
 
   changeCurrentData(m: Map<string, ComponentRef<any>>) {
     this.dataToPass.next(m)
+  }
+
+  changeDialogState(ds: boolean) {
+    this.dialogState.next(ds);
   }
 
   changeIndex(n: number){
@@ -29,18 +35,6 @@ export class Service{
 
   changePosition(n: number){
     this.position.next(n);
-  }
-
-  checkHtmlCodeChange(s: string) {
-    this.htmlCodeToPreview.getValue();
-  }
-
-  setNumberOfSelectOption(num: string[]) {
-    this.numberOfSelectOptions.next(num);
-  }
-
-  getNumberOfSelectOption() {
-    return this.numberOfSelectOptions;
   }
 
   setHtmlValue(value: string) {
