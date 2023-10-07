@@ -56,6 +56,17 @@ export class SelectElementComponent implements ElementType, OnInit {
         if (result.length != 0){
             if (result[0] !== '') {
               this.label = result[0];
+              //this.selectOptionValues = result[1]
+              this.htmlValue = this.generateHtml();
+              this.updateHtml.emit({
+                label: this.label,
+              })
+            }
+          }
+        this.elementComponent.changeDialogState();
+        if (result.length != 0){
+            if (result[0] !== '') {
+              this.label = result[0];
               this.htmlValue = this.generateHtml();
               this.updateHtml.emit({
                 label: this.label,

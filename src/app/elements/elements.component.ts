@@ -6,6 +6,13 @@ import {SelectElementComponent} from "./element-selection-tab/select-element/sel
 import {RadioElementComponent} from "./element-selection-tab/radio-element/radio-element.component";
 import {CheckboxElementComponent} from "./element-selection-tab/checkbox-element/checkbox-element.component";
 import {BackToTopComponent} from "./element-selection-tab/back-to-top/back-to-top.component";
+import {DatePickerElementComponent} from "./element-selection-tab/date-picker/date-picker-element.component";
+import {SeparatorElementComponent} from "./element-selection-tab/separator-element/separator-element.component";
+import {ImageElementComponent} from "./element-selection-tab/image-element/image-element.component";
+import {VideoElementComponent} from "./element-selection-tab/video-element/video-element.component";
+import {
+  GoToSaveCpElementComponent
+} from "./element-selection-tab/go-to-save-cp-element/go-to-save-cp-element.component";
 
 @Component({
   selector: 'app-elements',
@@ -28,7 +35,12 @@ export class ElementsComponent implements OnInit {
     selectType: 'selectElementComponent',
     radioType: 'radioElementComponent',
     checkType: 'checkElementComponent',
-    backToTopType: 'backToTopElementComponent'
+    backToTopType: 'backToTopElementComponent',
+    datePickerType: 'datePickerElementComponent',
+    separatorType: 'separatorElementComponent',
+    imageType: 'imageElementComponent',
+    videoType: 'videoElementComponent',
+    goToSaveCPType: 'goToSaveCpElementComponent'
   }
 
   constructor(private service: Service) {
@@ -132,6 +144,26 @@ export class ElementsComponent implements OnInit {
       }
       case this.componentTypes.backToTopType: {
         actualType = BackToTopComponent;
+        break;
+      }
+      case this.componentTypes.datePickerType: {
+        actualType = DatePickerElementComponent;
+        break;
+      }
+      case this.componentTypes.separatorType: {
+        actualType = SeparatorElementComponent;
+        break;
+      }
+      case this.componentTypes.imageType: {
+        actualType = ImageElementComponent
+        break;
+      }
+      case this.componentTypes.videoType: {
+        actualType = VideoElementComponent
+        break;
+      }
+      case this.componentTypes.goToSaveCPType: {
+        actualType = GoToSaveCpElementComponent
         break;
       }
     }

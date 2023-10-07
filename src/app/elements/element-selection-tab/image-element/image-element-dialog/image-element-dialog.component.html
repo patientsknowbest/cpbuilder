@@ -1,0 +1,12 @@
+<div><h1 mat-dialog-title>Edit Input Field</h1>
+    <label>Label </label>
+    <input matInput [(ngModel)]="label" value=""><br>
+    <label>Image Source </label>
+    <input matInput [(ngModel)]="src" value="" placeholder="Source path of the image"><br>
+    <div mat-dialog-actions>
+        <button [mat-dialog-close]="[label, src]">Save</button>
+        <button [mat-dialog-close]="[]">Cancel</button>
+    </div>
+</div>
+
+

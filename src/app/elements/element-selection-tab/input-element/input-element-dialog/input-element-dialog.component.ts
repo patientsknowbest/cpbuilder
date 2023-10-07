@@ -8,6 +8,7 @@ export interface DialogData {
   selectOptionValues: string[]
   inputValues: string[]
   checkBoxValues: string[]
+  src: string
 }
 @Component({
   selector: 'app-input-element-dialog',
@@ -16,7 +17,6 @@ export interface DialogData {
 })
 @Injectable()
 export class InputElementDialogComponent {
-  save = new EventEmitter<any>();
   public label: string;
   public placeholder: string;
   public helpText: string;
@@ -25,11 +25,6 @@ export class InputElementDialogComponent {
     this.label = data.label;
     this.placeholder = data.placeholder;
     this.helpText = data.helpText;
-  }
-
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 
 }

@@ -43,6 +43,15 @@ import {RouteReuseStrategy} from "@angular/router";
 import { BackToTopComponent } from './elements/element-selection-tab/back-to-top/back-to-top.component';
 import {PreviewComponent, SafeHtmlPipe} from './preview/preview.component';
 import {FormsModule} from "@angular/forms";
+import { DatePickerElementComponent } from './elements/element-selection-tab/date-picker/date-picker-element.component';
+import { DatePickerElementDialogComponent } from './elements/element-selection-tab/date-picker/date-picker-dialog/date-picker-element-dialog.component';
+import { SeparatorElementComponent } from './elements/element-selection-tab/separator-element/separator-element.component';
+import { ImageElementComponent } from './elements/element-selection-tab/image-element/image-element.component';
+import {NgOptimizedImage} from "@angular/common";
+import { ImageElementDialogComponent } from './elements/element-selection-tab/image-element/image-element-dialog/image-element-dialog.component';
+import { VideoElementComponent } from './elements/element-selection-tab/video-element/video-element.component';
+import { VideoElementDialogComponent } from './elements/element-selection-tab/video-element/video-element-dialog/video-element-dialog.component';
+import { GoToSaveCpElementComponent } from './elements/element-selection-tab/go-to-save-cp-element/go-to-save-cp-element.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +74,15 @@ import {FormsModule} from "@angular/forms";
     GenerateComponent,
     BackToTopComponent,
     PreviewComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    DatePickerElementComponent,
+    DatePickerElementDialogComponent,
+    SeparatorElementComponent,
+    ImageElementComponent,
+    ImageElementDialogComponent,
+    VideoElementComponent,
+    VideoElementDialogComponent,
+    GoToSaveCpElementComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +91,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule,
     MatInputModule,
     AppRoutingModule,
+    NgOptimizedImage,
   ],
   providers: [ElementType, Service, {provide: RouteReuseStrategy, useClass: AppReuseStrategy}, SafeHtmlPipe, GenerateComponent],
   bootstrap: [AppComponent]
