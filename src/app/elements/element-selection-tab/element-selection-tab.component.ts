@@ -15,6 +15,11 @@ export class ElementSelectionTabComponent {
   radioType: string;
   checkType: string;
   backToTopType: string;
+  datePickerType: string;
+  separatorType: string;
+  imageType: string;
+  videoType: string;
+  goToSaveCPType: string;
 
   constructor(public elementComponent: ElementsComponent) {
     this.textType = 'textElementComponent';
@@ -23,6 +28,11 @@ export class ElementSelectionTabComponent {
     this.radioType = 'radioElementComponent';
     this.checkType = 'checkElementComponent';
     this.backToTopType = 'backToTopElementComponent';
+    this.datePickerType = 'datePickerElementComponent';
+    this.separatorType = 'separatorElementComponent';
+    this.imageType = 'imageElementComponent';
+    this.videoType = 'videoElementComponent';
+    this.goToSaveCPType = 'goToSaveCpElementComponent';
 
   }
 

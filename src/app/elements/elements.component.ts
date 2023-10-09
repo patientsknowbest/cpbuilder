@@ -6,6 +6,13 @@ import {SelectElementComponent} from "./element-selection-tab/select-element/sel
 import {RadioElementComponent} from "./element-selection-tab/radio-element/radio-element.component";
 import {CheckboxElementComponent} from "./element-selection-tab/checkbox-element/checkbox-element.component";
 import {BackToTopComponent} from "./element-selection-tab/back-to-top/back-to-top.component";
+import {DatePickerElementComponent} from "./element-selection-tab/date-picker/date-picker-element.component";
+import {SeparatorElementComponent} from "./element-selection-tab/separator-element/separator-element.component";
+import {ImageElementComponent} from "./element-selection-tab/image-element/image-element.component";
+import {VideoElementComponent} from "./element-selection-tab/video-element/video-element.component";
+import {
+  GoToSaveCpElementComponent
+} from "./element-selection-tab/go-to-save-cp-element/go-to-save-cp-element.component";
 
 @Component({
   selector: 'app-elements',
@@ -19,6 +26,7 @@ export class ElementsComponent implements OnInit {
 
   public components = new Map<string, ComponentRef<any>>();
   private indexNumber = 0;
+  private position = 0;
   public isDialogOpen: boolean = false;
 
   private componentTypes: any = {
@@ -27,14 +35,23 @@ export class ElementsComponent implements OnInit {
     selectType: 'selectElementComponent',
     radioType: 'radioElementComponent',
     checkType: 'checkElementComponent',
-    backToTopType: 'backToTopElementComponent'
+    backToTopType: 'backToTopElementComponent',
+    datePickerType: 'datePickerElementComponent',
+    separatorType: 'separatorElementComponent',
+    imageType: 'imageElementComponent',
+    videoType: 'videoElementComponent',
+    goToSaveCPType: 'goToSaveCpElementComponent'
   }
 
   constructor(private service: Service) {
+    service.currentPosition.subscribe()
   }
 
   ngOnInit() {
     this.service.currentData.subscribe(m => this.components = m);
+    this.service.currentPosition.subscribe(p => this.position = p);
+    this.service.currentIndex.subscribe(i => this.indexNumber = i);
+    this.service.currentDialogState.subscribe(ds => this.isDialogOpen = ds);
   }
 
   public addComponent(componentName: string) {
@@ -57,48 +74,49 @@ export class ElementsComponent implements OnInit {
     })
 
     component.instance.name = uniqueName;
-    component.instance.position = this.indexNumber;
+    component.instance.position = this.position;
     this.components.set(uniqueName, component);
     this.indexNumber++;
+    this.position++;
   }
 
-  moveComponentDown(currentPosition: number, name: string){
+  moveDown(currentPosition: number, name: string){
     let newPosition = currentPosition + 1;
 
     if (newPosition < this.components.size){
       // @ts-ignore
-      let next : ComponentRef<any> = ComponentRef;
-      for (let i = 0; i < this.components.size; i++) {
-        if (this.components.get(i.toString())?.instance.position === (currentPosition + 1)){
-          next = <ComponentRef<any>>this.components.get(i.toString());
+      let nextElementComponentRef : ComponentRef<any> = ComponentRef;
+      for (let i = 0; i <= this.indexNumber; i++) {
+        if (this.components.get(i.toString())?.instance.position == newPosition){
+          nextElementComponentRef = <ComponentRef<any>>this.components.get(i.toString());
+          break;
         }
       }
       let currentViewRef = <ViewRef>this.components.get(name)?.hostView
       let currentComponent = <ComponentRef<any>>this.components.get(name)
       this.container.move(currentViewRef, newPosition)
       currentComponent.instance.position = newPosition;
-      let positionOfNextElement: number = next.instance.position
-      next.instance.position = positionOfNextElement - 1;
+      nextElementComponentRef.instance.position = currentPosition;
     }
   }
 
-  moveComponentUp(currentPosition: number, name: string){
+  moveUp(currentPosition: number, name: string){
     let newPosition = currentPosition - 1;
 
     if (newPosition >= 0){
       // @ts-ignore
-      let next : ComponentRef<any> = ComponentRef;
-      for (let i = 0; i < this.components.size; i++) {
+      let nextElementComponentRef : ComponentRef<any> = ComponentRef;
+      for (let i = 0; i < this.indexNumber; i++) {
         if (this.components.get(i.toString())?.instance.position === (currentPosition - 1)){
-          next = <ComponentRef<any>>this.components.get(i.toString());
+          nextElementComponentRef = <ComponentRef<any>>this.components.get(i.toString());
+          break;
         }
       }
       let currentViewRef = <ViewRef>this.components.get(name)?.hostView
       let currentComponent = <ComponentRef<any>>this.components.get(name)
       this.container.move(currentViewRef, newPosition)
       currentComponent.instance.position = newPosition;
-      let positionOfNextElement: number = next.instance.position
-      next.instance.position = positionOfNextElement + 1;
+      nextElementComponentRef.instance.position = currentPosition;
     }
   }
 
@@ -129,20 +147,47 @@ export class ElementsComponent implements OnInit {
         actualType = BackToTopComponent;
         break;
       }
+      case this.componentTypes.datePickerType: {
+        actualType = DatePickerElementComponent;
+        break;
+      }
+      case this.componentTypes.separatorType: {
+        actualType = SeparatorElementComponent;
+        break;
+      }
+      case this.componentTypes.imageType: {
+        actualType = ImageElementComponent
+        break;
+      }
+      case this.componentTypes.videoType: {
+        actualType = VideoElementComponent
+        break;
+      }
+      case this.componentTypes.goToSaveCPType: {
+        actualType = GoToSaveCpElementComponent
+        break;
+      }
     }
     // @ts-ignore
     return actualType;
   }
 
-  changeDialogOpenSate(){
+  changeDialogState(){
     this.isDialogOpen = !this.isDialogOpen;
+    this.service.changeDialogState(this.isDialogOpen);
   }
 
   deleteComponent(componentName: string) {
-    if (this.components.has(componentName)) {
+    let currentPositionOfElementToDelete = this.components.get(componentName)?.instance.position;
+
+      this.components.forEach(value => {
+        if (value.instance.position > currentPositionOfElementToDelete){
+          value.instance.position = value.instance.position - 1;
+        }
+      })
       this.components.get(componentName)?.destroy();
       this.components.delete(componentName);
-    }
+      this.position--;
   }
 }
 

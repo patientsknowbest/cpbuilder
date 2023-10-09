@@ -9,26 +9,32 @@ export class Service{
   private htmlCodeToPreview = new BehaviorSubject(STRING_TYPE.name.toString());
   private myBehaviorSubject = new BehaviorSubject<string>('');
   private numberOfSelectOptions = new BehaviorSubject<string[]>(['VALUE1', 'VALUE2', 'VALUE3']);
+  private index = new BehaviorSubject<number>(0);
+  private position = new BehaviorSubject<number>(0);
+  private dialogState = new BehaviorSubject<boolean>(false);
 
 
   currentData = this.dataToPass.asObservable();
   currentHtmlCode = this.htmlCodeToPreview.asObservable();
   currentNumberOfSelectOptions = this.numberOfSelectOptions.asObservable();
+  currentIndex = this.index.asObservable();
+  currentPosition = this.position.asObservable();
+  currentDialogState = this.dialogState.asObservable();
 
   changeCurrentData(m: Map<string, ComponentRef<any>>) {
     this.dataToPass.next(m)
   }
 
-  checkHtmlCodeChange(s: string) {
-    this.htmlCodeToPreview.getValue();
+  changeDialogState(ds: boolean) {
+    this.dialogState.next(ds);
   }
 
-  setNumberOfSelectOption(num: string[]) {
-    this.numberOfSelectOptions.next(num);
+  changeIndex(n: number){
+    this.index.next(n);
   }
 
-  getNumberOfSelectOption() {
-    return this.numberOfSelectOptions;
+  changePosition(n: number){
+    this.position.next(n);
   }
 
   setHtmlValue(value: string) {

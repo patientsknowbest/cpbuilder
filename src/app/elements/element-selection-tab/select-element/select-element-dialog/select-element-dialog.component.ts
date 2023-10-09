@@ -38,7 +38,6 @@ export class SelectElementDialogComponent {
   }
 
   removeOption(indexOfTheElement: number){
-    console.log(indexOfTheElement)
     if (this.selectOptionValues.length > 1) {
       this.selectOptionValues.splice(indexOfTheElement,1);
       this.bufferOptionValues.splice(indexOfTheElement, 1);

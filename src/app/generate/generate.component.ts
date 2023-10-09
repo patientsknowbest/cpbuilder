@@ -23,24 +23,24 @@ constructor(private dataService: Service) {
   '    .form-group {width: 100%; !important}\n' +
   '    .cp_label {font-size: 18px;font-weight: 900;}\n' +
   '    .cp_whiteBox {background-color:#ffffff; padding:15px; margin-bottom:10px; margin-top:10px; border-radius: 10px; border: 3px solid #014151;}\n' +
-  '  </style>' +
+  '  </style>\n' +
   '    <div class="cp_whiteBox">'];
 
     if (this.mappedComponents.size > 0) {
-      let sortedComponentRefs: any = [];
+      let sortedComponentRefs: ComponentRef<any>[] = [];
 
-      this.mappedComponents.forEach((a,v) => {
-        let pos = a.instance?.position
-        sortedComponentRefs[pos] = a;
+      this.mappedComponents.forEach((component,key) => {
+        let position = component.instance?.position;
+          sortedComponentRefs[position] = component;
       })
 
-      for (let i = 0; i < sortedComponentRefs.length; i++) {
-        concatenatedCode.push(sortedComponentRefs[i].instance.htmlValue);
+      sortedComponentRefs.forEach((comp) => {
+        concatenatedCode.push(comp.instance.htmlValue);
         let actualCode = ''
         let s = function (){concatenatedCode.forEach((d)=> {actualCode+=d})}
-      }
+      })
 
-      concatenatedCode.push('</div>\n</div>');
+      concatenatedCode.push('  </div>\n</div>');
       let finalHtmlCode = concatenatedCode.join("\r\n")
       concatenatedCode.shift()
       this.dataService.setHtmlValue(finalHtmlCode);

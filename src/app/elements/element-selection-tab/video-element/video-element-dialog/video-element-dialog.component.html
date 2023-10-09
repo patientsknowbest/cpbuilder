@@ -1,0 +1,9 @@
+<div><h1 mat-dialog-title>Edit Input Field</h1>
+    <label>Video Source </label>
+    <input matInput [(ngModel)]="src" value="" placeholder="E.g. youtube.com/example"><br>
+    <div mat-dialog-actions>
+        <button [mat-dialog-close]="[src]">Save</button>
+        <button [mat-dialog-close]="[]">Cancel</button>
+    </div>
+</div>
+

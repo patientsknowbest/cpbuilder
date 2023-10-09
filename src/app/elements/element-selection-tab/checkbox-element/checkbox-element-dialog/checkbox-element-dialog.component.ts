@@ -29,7 +29,6 @@ export class CheckboxElementDialogComponent {
   }
 
   removeCheckbox(indexOfTheElement: number){
-    console.log(indexOfTheElement)
     if (this.checkBoxValues.length > 1) {
       this.checkBoxValues.splice(indexOfTheElement,1);
       this.bufferCheckBoxValues.splice(indexOfTheElement, 1);

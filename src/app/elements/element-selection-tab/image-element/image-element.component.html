@@ -1,0 +1,14 @@
+<div class="row" style="margin-top: 15px;">
+    <div>
+        <label class="cp_label input-group" >{{label}}</label><br>
+        <img class="cp_image"
+             [ngSrc]="src"
+             alt="ALT TEXT" style="max-width: 360px; max-height: 360px;  margin: auto;"
+             width="100%"
+             height="auto">
+    </div>
+    <button (click)="openDialog()">EDIT</button>
+    <button (click)="removeElement()">REMOVE</button>
+    <button (click)="elementComponent.moveDown(position, name)">MOVE DOWN</button>
+    <button (click)="elementComponent.moveUp(position, name)">MOVE UP</button>
+</div>
