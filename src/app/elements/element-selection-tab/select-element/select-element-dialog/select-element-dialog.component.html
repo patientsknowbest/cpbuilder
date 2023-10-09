@@ -1,7 +1,7 @@
 <div><h1 mat-dialog-title>Edit Input Field</h1>
-  <label>Label</label>
+  <label>Label </label>
   <input matInput [(ngModel)]="label" value=""><br>
-  <button (click)="addOption()">Add option</button>
+  <button (click)="addOption()">Add option </button>
 </div>
 <div *ngFor="let option of selectOptionValues; let i=index"> Option text
   <input value="" [(ngModel)]="bufferOptionValues[i]"><button *ngIf="selectOptionValues.length > 2" (click)="removeOption(i)"> REMOVE </button><br>

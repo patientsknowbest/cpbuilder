@@ -2,17 +2,17 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainer
 import {ElementsComponent} from "../../elements.component";
 
 @Component({
-  selector: 'app-back-to-top',
-  templateUrl: './back-to-top.component.html',
-  styleUrls: ['./back-to-top.component.css']
+  selector: 'app-go-to-save-cp-element',
+  templateUrl: './go-to-save-cp-element.component.html',
+  styleUrls: ['./go-to-save-cp-element.component.css']
 })
-export class BackToTopComponent implements OnInit{
-  @Input() name: string = '';
-  @Input() position: number;
+export class GoToSaveCpElementComponent implements OnInit{
+@Input() name: string = '';
+@Input() position: number;
 
-  @Output() removedElement = new EventEmitter<any>();
-  @Output() updateHtml = new EventEmitter<any>();
-  @ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
+@Output() removedElement = new EventEmitter<any>();
+@Output() updateHtml = new EventEmitter<any>();
+@ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
 
   htmlValue = this.generateHtml();
 
@@ -21,7 +21,10 @@ export class BackToTopComponent implements OnInit{
   }
 
   generateHtml() {
-    return '     <button class="cp_button-back-to-top" title="Back to Top" ><a href="#top">Back To Top</a></button>';
+    return '' +
+    '      <div class="cp_go-to-save-cp-container">\n' +
+    '        <button class="cp_go-to-save-cp-button" title="Back to Top" style="margin-top:15px; margin-bottom:15px;"><a href="#fileUploadForm_save">Go to Save Care Plan</a></button>\n' +
+    '      </div>';
   }
 
   constructor(public elementComponent: ElementsComponent) {}
@@ -48,5 +51,8 @@ export class BackToTopComponent implements OnInit{
       }
 
     })();
+  }
+  moveDownElement(){
+
   }
 }

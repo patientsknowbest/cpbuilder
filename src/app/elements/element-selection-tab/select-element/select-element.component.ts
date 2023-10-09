@@ -54,14 +54,14 @@ export class SelectElementComponent implements ElementType, OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.elementComponent.changeDialogState();
         if (result.length != 0){
-            if (result[0] !== '') {
-              this.label = result[0];
-              this.htmlValue = this.generateHtml();
-              this.updateHtml.emit({
-                label: this.label,
-              })
-            }
+          if (result[0] !== '') {
+            this.label = result[0];
+            this.htmlValue = this.generateHtml();
+            this.updateHtml.emit({
+              label: this.label,
+            })
           }
+        }
       });
     }
   }
