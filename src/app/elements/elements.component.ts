@@ -51,6 +51,7 @@ export class ElementsComponent implements OnInit {
     this.service.currentData.subscribe(m => this.components = m);
     this.service.currentPosition.subscribe(p => this.position = p);
     this.service.currentIndex.subscribe(i => this.indexNumber = i);
+    this.service.currentDialogState.subscribe(ds => this.isDialogOpen = ds);
   }
 
   public addComponent(componentName: string) {
@@ -173,6 +174,7 @@ export class ElementsComponent implements OnInit {
 
   changeDialogState(){
     this.isDialogOpen = !this.isDialogOpen;
+    this.service.changeDialogState(this.isDialogOpen);
   }
 
   deleteComponent(componentName: string) {
