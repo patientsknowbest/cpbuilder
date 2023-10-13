@@ -16,30 +16,35 @@ export class SelectElementComponent implements ElementType, OnInit {
   @Output() moveUpElement = new EventEmitter<any>();
   @Output() removedElement = new EventEmitter<any>();
   @Output() updateHtml = new EventEmitter<any>();
-  label:string = 'LABEL';
-  selectOptionValues:string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
+  label: string = 'LABEL';
+  selectOptionValues: string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
+  id: string = 'ID'
   htmlValue = this.generateHtml();
 
   constructor(public dialog: MatDialog, private dataService: Service, public elementComponent: ElementsComponent) {
     this.label = 'LABEL';
+    this.id = 'ID';
   }
 
   ngOnInit() {}
 
   generateHtml(){
-    return '     <div class="row cp_select-element" style="margin-top: 15px;">\n' +
-    '          <label class="cp_select-element-label input-group">' + this.label + '</label>\n' +
-    '            <div class="cp_select-element-selection" style="margin-top: 15px;">\n' +
-    '              <select class="cp_select" >' + this.generateOptions() +
-    '              </select>\n' +
-    '          </div>\n' +
-    '     </div>'
+    return '        <div class="row" style="margin-top: 15px;">\n' +
+           '            <div class="col-sm-6">\n' +
+           '                <label class="cp_label for="' + this.id + '">' + this.label + '</label>\n' +
+           '            </div>\n' +
+           '            <div class="col-sm-6" style="margin-top: 15px;">\n' +
+           '                <select class="form-control" name="' + this.id + '" id="' + this.id + '">\n' +
+                                this.generateOptions() +
+           '                </select>\n' +
+           '            </div>\n' +
+           '        </div>\n'
   }
 
   generateOptions() {
     let options = '';
     for (let i = 0; i < this.selectOptionValues.length; i++) {
-      options += '              <option class="cp_select-option" value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '</option>\n'
+      options += '                    <option value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '</option>\n'
     }
     return options;
   }
@@ -48,7 +53,7 @@ export class SelectElementComponent implements ElementType, OnInit {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(SelectElementDialogComponent, {
-        data: {label: this.label, selectOptionValues: this.selectOptionValues}
+        data: {label: this.label, selectOptionValues: this.selectOptionValues, id: this.id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -56,11 +61,15 @@ export class SelectElementComponent implements ElementType, OnInit {
         if (result.length != 0){
           if (result[0] !== '') {
             this.label = result[0];
-            this.htmlValue = this.generateHtml();
-            this.updateHtml.emit({
-              label: this.label,
-            })
           }
+          if (result[1] !== '') {
+            this.id = result[1];
+          }
+          this.htmlValue = this.generateHtml();
+          this.updateHtml.emit({
+            label: this.label,
+            id: this.id,
+          })
         }
       });
     }

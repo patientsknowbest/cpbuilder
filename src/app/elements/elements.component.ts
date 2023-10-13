@@ -13,6 +13,9 @@ import {VideoElementComponent} from "./element-selection-tab/video-element/video
 import {
   GoToSaveCpElementComponent
 } from "./element-selection-tab/go-to-save-cp-element/go-to-save-cp-element.component";
+import {MatDialog} from "@angular/material/dialog";
+import { ClearEditorDialogComponent } from './clear-editor-dialog/clear-editor-dialog.component';
+
 
 @Component({
   selector: 'app-elements',
@@ -28,6 +31,7 @@ export class ElementsComponent implements OnInit {
   private indexNumber = 0;
   private position = 0;
   public isDialogOpen: boolean = false;
+  private delete: boolean;
 
   private componentTypes: any = {
     textType: 'textElementComponent',
@@ -43,7 +47,7 @@ export class ElementsComponent implements OnInit {
     goToSaveCPType: 'goToSaveCpElementComponent'
   }
 
-  constructor(private service: Service) {
+  constructor(private service: Service, public dialog: MatDialog) {
     service.currentPosition.subscribe()
   }
 
@@ -189,6 +193,37 @@ export class ElementsComponent implements OnInit {
       this.components.delete(componentName);
       this.position--;
   }
+
+  
+  emptyingTheEditor() {
+        /**
+     By destroying the elements of the map this component unsubscribes from the datasource.
+     This step has to be done first otherwise the deletion would not work because after
+     deleting the items of the map it would retrieve again them from the datasource due to the live subscription.
+     **/
+     this.components.forEach(a => a.destroy())
+     this.components.forEach((a,v) => {
+       this.components.delete(v)
+     })
+     this.service.changeIndex(0);
+     this.service.changeCurrentData(new Map<string, ComponentRef<any>>())
+     this.service.setHtmlValue('')
+     this.service.changePosition(0);
+  }
+
+  openDialog(): void {
+    if (!this.isDialogOpen) {
+      this.changeDialogState();
+      const dialogRef = this.dialog.open(ClearEditorDialogComponent, {
+        data: {delete: this.delete}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.changeDialogState();
+        if (result == true) {
+          this.emptyingTheEditor();
+        } 
+      });
+    }
+  }
 }
-
-

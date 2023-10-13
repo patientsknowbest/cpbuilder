@@ -3,8 +3,11 @@
     <input matInput [(ngModel)]="label" value=""><br>
     <button (click)="addCheckbox()">Add option</button>
 </div>
-<div *ngFor="let checkBox of checkBoxValues; let i=index"> Option text
+<div *ngFor="let checkBox of checkBoxValues; let i=index"> 
+    <label> Option text </label>
     <input value="" [(ngModel)]="bufferCheckBoxValues[i]">
+    <label> Id / Name </label>
+    <input value="" [(ngModel)]="bufferCheckBoxIds[i]">
     <button *ngIf="checkBoxValues.length > 1" (click)="removeCheckbox(i)"> REMOVE</button>
     <br>
 </div>

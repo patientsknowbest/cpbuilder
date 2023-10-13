@@ -1,3 +1,9 @@
+<div class="cp-button-container">
+  <button class="button-4" id="copy-editor-content" (click)="copyHtmlCode()">COPY HTML CODE</button>
+</div>
+<div *ngIf="notificationService.isVisible" class="notification">
+  {{ notificationService.message }}
+</div>
 <div class="code-container">
   {{generateOutputHtmlCode()}}
 </div>

@@ -24,10 +24,9 @@ export class VideoElementComponent implements ElementType {
   htmlValue = this.generateHtml();
 
   generateHtml() {
-    return '' +
-        '      <div class="cp_video_element" style="margin: auto;">\n' +
-        '        <iframe width="520" height="260" allowfullscreen="true" class="cp_video-element-iframe" src="' + this.src +'"></iframe>\n' +
-        '      </div>';
+    return '        <div class="embed-responsive embed-responsive-16by9" style="margin-top: 15.0px;margin-bottom: 15.0px;">\n' +
+           '            <iframe allowfullscreen="true" class="embed-responsive-item" src="' + this.src +'"></iframe>\n' +
+           '        </div>\n';
   }
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {

@@ -21,7 +21,7 @@ export class BackToTopComponent implements OnInit{
   }
 
   generateHtml() {
-    return '     <button class="cp_button-back-to-top" title="Back to Top" ><a href="#top">Back To Top</a></button>';
+    return '        <a href="#top" class="btn arrow btn-primary" title="Back to Top" alt="Click here to return to the Table of Contents" style="margin-top:15px; margin-bottom:15px;">Back to Top</a>\n';
   }
 
   constructor(public elementComponent: ElementsComponent) {}

@@ -5,6 +5,8 @@
 </div>
 <div *ngFor="let radioElement of radioElementValues; let i=index"> Option text
     <input value="" [(ngModel)]="bufferRadioElementValues[i]">
+    <label> Id / Name </label>
+    <input value="" [(ngModel)]="bufferRadioElementIds[i]">
     <button *ngIf="radioElementValues.length > 2" (click)="removeRadioButton(i)"> REMOVE</button>
     <br>
 </div>

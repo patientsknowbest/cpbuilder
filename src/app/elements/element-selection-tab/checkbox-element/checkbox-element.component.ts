@@ -18,26 +18,28 @@ export class CheckboxElementComponent implements ElementType {
   @Output() moveUpElement = new EventEmitter<any>();
   label: string = 'LABEL';
   checkBoxValues:string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
+  checkBoxIds:string[] = ['ID1', 'ID2', 'ID3'];
   htmlValue = this.generateHtml();
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
     this.label = 'LABEL';}
 
   generateHtml() {
-    return '     <div class="row cp_checkbox-element" style="margin-top: 15px;">\n' +
-      '       <p class="cp_checkbox-element-label">' + this.label + '</p>\n' +
-      '       <div class=cp_checkbox-element-wraper" style="margin-top: 15px;">\n' +
-      '         <div class="cp_checkbox-options">\n' + this.generateCheckboxes() +
-      '         </div>\n' +
-      '       </div>\n' +
-      '     </div>';
+    return '        <div class="row" style="margin-top: 15px;">\n' +
+           '            <div class="col-sm-6">\n' +
+           '                <p class="cp_label">' + this.label + '</p>\n' +
+           '            </div>\n' +
+           '            <div class="col-sm-6" style="margin-top: 15px;">\n' + 
+                            this.generateCheckboxes() +
+           '            </div>\n' +
+           '        </div>\n';
   }
 
   openDialog(): void {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(CheckboxElementDialogComponent, {
-        data: {label: this.label, checkBoxValues: this.checkBoxValues},
+        data: {label: this.label, checkBoxValues: this.checkBoxValues, checkBoxIds: this.checkBoxIds},
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -58,8 +60,13 @@ export class CheckboxElementComponent implements ElementType {
   generateCheckboxes() {
     let options = '';
     for (let i = 0; i < this.checkBoxValues.length; i++) {
-      options += '           <div><input class="cp_checkbox-option" type="checkbox" value="' + this.checkBoxValues[i] + '"><label class="cp_label col-xs-10 pull-right">' + this.checkBoxValues[i] + '</label></div>\n';
-    }
+      options += '                <div class="row">\n' + 
+                 '                    <div class="form-check col-xs-12 pull-left">\n' + 
+                 '                        <input class="form-check-input form-control" type="checkbox" name="' + this.checkBoxIds[i] + '" id="' + this.checkBoxIds[i] + '" value="' + this.checkBoxValues[i] + '"/>\n' + 
+                 '                        <label class="cp_label col-xs-10 pull-right" for="' + this.checkBoxIds[i] + '">' + this.checkBoxValues[i] + '</label>\n' + 
+                 '                    </div>\n' +
+                 '                </div>\n';
+    }    
     return options;
   }
 

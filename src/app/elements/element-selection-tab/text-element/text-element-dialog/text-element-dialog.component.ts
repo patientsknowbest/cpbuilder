@@ -11,8 +11,10 @@ import {DialogData} from "../../input-element/input-element-dialog/input-element
 export class TextElementDialogComponent {
 
   public label: string;
+  public id: string;
 
   constructor(public dialogRef: MatDialogRef<TextElementDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData,) {
       this.label = data.label;
+      this.id = data.id;
   }
 }
