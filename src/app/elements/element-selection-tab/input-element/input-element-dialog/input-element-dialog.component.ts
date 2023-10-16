@@ -7,8 +7,13 @@ export interface DialogData {
   helpText: string;
   selectOptionValues: string[]
   inputValues: string[]
+  inputIds: string[]
   checkBoxValues: string[]
-  src: string
+  checkBoxIds: string[]
+  src: string;
+  altText: string;
+  delete: boolean;
+  id: string;
 }
 @Component({
   selector: 'app-input-element-dialog',
@@ -20,11 +25,13 @@ export class InputElementDialogComponent {
   public label: string;
   public placeholder: string;
   public helpText: string;
+  public id: string;
 
   constructor(public dialogRef: MatDialogRef<InputElementDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.label = data.label;
     this.placeholder = data.placeholder;
     this.helpText = data.helpText;
+    this.id = data.id;
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, Type, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ElementType} from "../element-selection-tab.component";
 import {ElementsComponent} from "../../elements.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -16,22 +16,23 @@ export class TextElementComponent implements ElementType {
   @Output() removedElement = new EventEmitter<any>();
   @Output() updateHtml = new EventEmitter<any>();
   label: string = 'LABEL';
+  id: string = 'ID';
   htmlValue = this.generateHtml();
 
   generateHtml(){
-    return '     <div class="row cp_text-element" style="margin-top: 15px;">\n' +
-      '       <div class="cp_text-element-group">\n' +
-      '          <label class="cp_text-element-label" >' + this.label + '</label>\n' +
-      '          <textarea class="cp_text-element-text-area" rows="3" style="width: 100%;"></textarea>\n' +
-      '       </div>\n' +
-      '    </div>'
+    return '        <div class="row" style="margin-top: 15px;">\n' +
+           '            <div class="col-sm-12">\n' +
+           '                <label class="cp_label" for="' + this.id + '">' + this.label + '</label>\n' +
+           '                <textarea class="form-control" name="' + this.id + '" id="' + this.id + '" rows="3" style="width: 100%;"></textarea>\n' +
+           '            </div>\n' +
+           '        </div>\n'
   }
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
-
     this.label = 'LABEL';
-
+    this.id = 'ID';
   }
+
   close() {
     this.removedElement.emit({
       name: this.name,
@@ -42,7 +43,7 @@ export class TextElementComponent implements ElementType {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(TextElementDialogComponent, {
-        data: {label: this.label},
+        data: {label: this.label, id: this.id},
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -50,11 +51,16 @@ export class TextElementComponent implements ElementType {
         if (result.length != 0) {
           if (result[0] !== '') {
             this.label = result[0];
-            this.htmlValue = this.generateHtml();
-            this.updateHtml.emit({
-              label: this.label,
-            })
           }
+          if (result[1] !== '') {
+            this.id = result[1];
+          }
+
+          this.htmlValue = this.generateHtml();
+          this.updateHtml.emit({
+            label: this.label,
+            id: this.id,
+          })
         }
       });
     }

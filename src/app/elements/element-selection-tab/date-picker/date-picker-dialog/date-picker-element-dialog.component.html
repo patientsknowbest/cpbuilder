@@ -1,10 +1,13 @@
-<div><h1 mat-dialog-title>Edit Input Field</h1>
+<div>
+    <h1 mat-dialog-title>Edit Input Field</h1>
     <label>Label</label>
     <input matInput [(ngModel)]="label" value=""><br>
     <label>Help Text</label>
-    <input matInput [(ngModel)]="helpText" value="">
+    <input matInput [(ngModel)]="helpText" value=""><br>
+    <label>Id / Name</label>
+    <input matInput [(ngModel)]="id" value="">
     <div mat-dialog-actions>
-        <button [mat-dialog-close]="[label, helpText]">Save</button>
+        <button [mat-dialog-close]="[label, helpText, id]">Save</button>
         <button [mat-dialog-close]="[]">Cancel</button>
     </div>
 </div>

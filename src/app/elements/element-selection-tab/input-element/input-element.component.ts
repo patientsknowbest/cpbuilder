@@ -23,17 +23,19 @@ export class InputElementComponent implements ElementType {
   helpText: string = 'HELP TEXT';
   label: string = 'LABEL';
   placeholder: string = 'PLACEHOLDER';
+  id: string = 'ID'
   htmlValue = this.generateHtml();
 
   generateHtml() {
-    return '      <div class="row cp_input-element" style="margin-top: 15px;">\n' +
-      '          <div class="col-sm-6 input-group">\n' +
-      '             <label class="cp-label cp-input-with-label">' + this.label + '</label></div>\n' +
-      '             <div class="col-sm-6 input-group" style="margin-top: 15px;">\n' +
-      '               <input type="text" class="cp_input form-control" style="width: 100%;" placeholder="' + this.placeholder + '" value="">\n' +
-      '               <span>' + this.helpText + '</span>\n' +
-      '             </div>\n' +
-      '       </div>';
+    return '        <div class="row" style="margin-top: 15px;">\n' +
+           '            <div class="col-sm-6">\n' +
+           '                <label class="cp-label" for="' + this.id + '">' + this.label + '</label>\n' +
+           '            </div>\n' +
+           '            <div class="col-sm-6" style="margin-top: 15px;">\n' +
+           '                <input type="text" name="' + this.id + '" id="' + this.id + '" class="form-control" style="width: 100%;" placeholder="' + this.placeholder + '"/>\n' +
+           '                <span class="help-block">' + this.helpText + '</span>\n' +
+           '            </div>\n' +
+           '        </div>\n';
   }
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
@@ -43,7 +45,7 @@ export class InputElementComponent implements ElementType {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(InputElementDialogComponent, {
-        data: {label: this.label, placeholder: this.placeholder, helpText: this.helpText},
+        data: {label: this.label, placeholder: this.placeholder, helpText: this.helpText, id: this.id},
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -58,13 +60,17 @@ export class InputElementComponent implements ElementType {
         if (result[2] !== '') {
           this.helpText = result[2];
         }
+        if (result[3] !== '') {
+          this.id = result[3];
+        }
         }
 
         this.htmlValue = this.generateHtml();
         this.updateHtml.emit({
           placeholder: this.placeholder,
           label: this.label,
-          helpText: this.helpText
+          helpText: this.helpText,
+          id: this.id
         })
       });
     }

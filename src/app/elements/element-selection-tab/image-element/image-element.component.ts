@@ -19,16 +19,12 @@ export class ImageElementComponent implements ElementType {
   @Output() updateHtml = new EventEmitter<any>();
   @ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
 
-  label: string = 'LABEL';
+  altText: string = 'ALT TEXT';
   src: string = '';
   htmlValue = this.generateHtml();
 
   generateHtml() {
-    return '' +
-        '      <div class="cp_image-element">\n' +
-        '        <label class="cp_image-elementlabel input-group" >' + this.label + '</label><br>\n' +
-        '        <img class="cp_image" src="' + this.src + '" alt="ALT TEXT" style="max-width: 360px; max-height: 360px; margin: auto;" width="100%" height="auto">\n' +
-        '      </div>';
+    return '        <img src="' + this.src + '" alt="' + this.altText + '" style="max-width: 720px; width: 100%; height: auto; margin-top: 15px;"></img>\n';
   }
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
@@ -38,14 +34,14 @@ export class ImageElementComponent implements ElementType {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(ImageElementDialogComponent, {
-        data: {label: this.label, src: this.src},
+        data: {altText: this.altText, src: this.src},
       });
 
       dialogRef.afterClosed().subscribe(result => {
         this.elementComponent.changeDialogState();
         if (result.length != 0){
-          if (result[0] !== this.label) {
-            this.label = result[0];
+          if (result[0] !== this.altText) {
+            this.altText = result[0];
           }
           if (result[1] !== '') {
             this.src = result[1];
@@ -54,7 +50,7 @@ export class ImageElementComponent implements ElementType {
 
         this.htmlValue = this.generateHtml();
         this.updateHtml.emit({
-          label: this.label,
+          altText: this.altText,
           src: this.src,
         })
       });

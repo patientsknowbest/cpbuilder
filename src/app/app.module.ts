@@ -52,6 +52,7 @@ import { ImageElementDialogComponent } from './elements/element-selection-tab/im
 import { VideoElementComponent } from './elements/element-selection-tab/video-element/video-element.component';
 import { VideoElementDialogComponent } from './elements/element-selection-tab/video-element/video-element-dialog/video-element-dialog.component';
 import { GoToSaveCpElementComponent } from './elements/element-selection-tab/go-to-save-cp-element/go-to-save-cp-element.component';
+import { ClearEditorDialogComponent } from './elements/clear-editor-dialog/clear-editor-dialog.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { GoToSaveCpElementComponent } from './elements/element-selection-tab/go-
     ImageElementDialogComponent,
     VideoElementComponent,
     VideoElementDialogComponent,
-    GoToSaveCpElementComponent
+    GoToSaveCpElementComponent,
+    ClearEditorDialogComponent
   ],
   imports: [
     BrowserModule,
