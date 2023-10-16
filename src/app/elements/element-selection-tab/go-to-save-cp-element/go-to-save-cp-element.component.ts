@@ -21,10 +21,7 @@ export class GoToSaveCpElementComponent implements OnInit{
   }
 
   generateHtml() {
-    return '' +
-    '      <div class="cp_go-to-save-cp-container">\n' +
-    '        <button class="cp_go-to-save-cp-button" title="Back to Top" style="margin-top:15px; margin-bottom:15px;"><a href="#fileUploadForm_save">Go to Save Care Plan</a></button>\n' +
-    '      </div>';
+    return '        <a href="#fileUploadForm_save" class="btn arrow btn-primary" title="Back to Top" alt="Click here to save the Care Plan" style="margin-top:15px; margin-bottom:15px;">Go to Save Care Plan</a>\n';
   }
 
   constructor(public elementComponent: ElementsComponent) {}

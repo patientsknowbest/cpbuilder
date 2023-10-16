@@ -19,7 +19,7 @@ export class SeparatorElementComponent implements ElementType {
   htmlValue = this.generateHtml();
 
   generateHtml() {
-    return '      <hr class="cp_separator" style="height: 3px; background-color: black; margin: 50px auto;width: 80%;"/>';
+    return '        <hr class="cp_separator" style="height: 3px; background-color: black; margin: 50px auto;width: 80%;"/>\n';
   }
 
   constructor(public elementComponent: ElementsComponent) {

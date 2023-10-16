@@ -8,11 +8,11 @@ import {DialogData} from "../../input-element/input-element-dialog/input-element
   styleUrls: ['./image-element-dialog.component.css']
 })
 export class ImageElementDialogComponent {
-  public label: string;
+  public altText: string;
   public src: string;
 
   constructor(public dialogRef: MatDialogRef<ImageElementDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    this.label = data.label;
+    this.altText = data.altText;
     this.src = data.src;
   }
 }

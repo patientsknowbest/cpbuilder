@@ -16,12 +16,14 @@ import {DialogData} from "../../input-element/input-element-dialog/input-element
 export class SelectElementDialogComponent {
 
   public label: string;
+  public id: string;
   public selectOptionValues: string[] = [];
   public bufferOptionValues: string[] = [];
   private currentIndex:number;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.label = data.label;
+    this.id = data.id;
     this.selectOptionValues = data.selectOptionValues;
     this.bufferOptionValues = [...this.selectOptionValues]
     this.currentIndex = 0;

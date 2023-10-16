@@ -10,10 +10,12 @@ import {DialogData} from "../../input-element/input-element-dialog/input-element
 export class DatePickerElementDialogComponent {
   public label: string;
   public helpText: string;
+  public id: string;
 
   constructor(public dialogRef: MatDialogRef<DatePickerElementDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.label = data.label;
     this.helpText = data.helpText;
+    this.id = data.id;
   }
 
 }

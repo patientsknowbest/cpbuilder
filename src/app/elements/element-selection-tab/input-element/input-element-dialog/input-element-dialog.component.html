@@ -4,9 +4,11 @@
 <label>Placeholder </label>
 <input matInput [(ngModel)]="placeholder" value=""><br>
 <label>Help Text </label>
-<input matInput [(ngModel)]="helpText" value="">
+<input matInput [(ngModel)]="helpText" value=""><br>
+<label>Id / Name </label>
+<input matInput [(ngModel)]="id" value="">
 <div mat-dialog-actions>
-  <button [mat-dialog-close]="[label, placeholder, helpText]">Save</button>
+  <button [mat-dialog-close]="[label, placeholder, helpText, id]">Save</button>
   <button [mat-dialog-close]="[]">Cancel</button>
 </div>
 </div>

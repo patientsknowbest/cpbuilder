@@ -21,27 +21,28 @@ export class DatePickerElementComponent implements ElementType {
 
   helpText: string = 'HELP TEXT';
   label: string = 'LABEL';
+  id: string = 'ID';
   htmlValue = this.generateHtml();
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
   }
 
-  generateHtml() { return '      <div class="row cp_date-picker" style="margin-top: 15px;">\n' +
-    '         <div class="cp_date-picker-label-container">\n' +
-    '             <label class="cp_date-picker-label">' + this.label + '</label>\n' +
-    '         </div>\n' +
-    '         <div class="cp_date-picker-input-container" style="margin-top: 15px;">\n' +
-    '             <input type="date" class="cp_date-picker_input" placeholder="dd/mm/yyyy"/><br>\n' +
-    '             <span class="cp_date-picker-help-text">' + this.helpText + '</span>\n' +
-    '         </div>\n' +
-    '      </div>';
+  generateHtml() { return '        <div class="row" style="margin-top: 15px;">\n' +
+                          '            <div class="col-sm-6">\n' +
+                          '                <label class="cp_label" for="' + this.id + '">' + this.label + '</label>\n' +
+                          '            </div>\n' +
+                          '            <div class="col-sm-6" style="margin-top: 15px;">\n' +
+                          '                <input type="date" name="' + this.id + '" id="' + this.id + '" class="form-control" placeholder="dd/mm/yyyy"/>\n' +
+                          '                <span class="help-block">' + this.helpText + '</span>\n' +
+                          '            </div>\n' +
+                          '        </div>\n';
   }
 
   openDialog(): void {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(DatePickerElementDialogComponent, {
-        data: {label: this.label, helpText: this.helpText},
+        data: {label: this.label, helpText: this.helpText, id: this.id},
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -50,15 +51,19 @@ export class DatePickerElementComponent implements ElementType {
           if (result[0] !== this.label) {
             this.label = result[0];
           }
-          if (result[2] !== '') {
+          if (result[1] !== '') {
             this.helpText = result[1];
+          }
+          if (result[2] !== '') {
+            this.id = result[2];
           }
         }
 
         this.htmlValue = this.generateHtml();
         this.updateHtml.emit({
           label: this.label,
-          helpText: this.helpText
+          helpText: this.helpText,
+          id: this.id
         })
       });
     }
