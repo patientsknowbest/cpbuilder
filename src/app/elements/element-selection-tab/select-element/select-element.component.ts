@@ -18,7 +18,8 @@ export class SelectElementComponent implements ElementType, OnInit {
   @Output() updateHtml = new EventEmitter<any>();
   label: string = 'LABEL';
   selectOptionValues: string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
-  id: string = 'ID'
+  id: string = 'ID';
+  selectOptionAttributeValues: string[] = ['ATTR_VALUE1', 'ATTR_VALUE2', 'ATTR_VALUE3'];
   htmlValue = this.generateHtml();
 
   constructor(public dialog: MatDialog, private dataService: Service, public elementComponent: ElementsComponent) {
@@ -44,7 +45,7 @@ export class SelectElementComponent implements ElementType, OnInit {
   generateOptions() {
     let options = '';
     for (let i = 0; i < this.selectOptionValues.length; i++) {
-      options += '                    <option value="' + this.selectOptionValues[i] + '">' + this.selectOptionValues[i] + '</option>\n'
+      options += '                    <option value="' + this.selectOptionAttributeValues[i] + '">' + this.selectOptionValues[i] + '</option>\n'
     }
     return options;
   }
@@ -53,7 +54,7 @@ export class SelectElementComponent implements ElementType, OnInit {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(SelectElementDialogComponent, {
-        data: {label: this.label, selectOptionValues: this.selectOptionValues, id: this.id}
+        data: {label: this.label, selectOptionValues: this.selectOptionValues, selectOptionAttributeValues: this.selectOptionAttributeValues, id: this.id}
       });
 
       dialogRef.afterClosed().subscribe(result => {

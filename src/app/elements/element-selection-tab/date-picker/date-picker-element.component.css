@@ -5,3 +5,7 @@
 button {
     margin-right: 5px;
 }
+
+.input-group .p_date-picker_input {
+    z-index: 0;
+}

@@ -6,12 +6,18 @@ export interface DialogData {
   placeholder: string;
   helpText: string;
   selectOptionValues: string[]
+  selectOptionAttributeValues: string[]
   inputValues: string[]
   inputIds: string[]
+  inputAttributeValues: string[]
   checkBoxValues: string[]
   checkBoxIds: string[]
+  checkBoxAttributeValues: string[]
   src: string;
   altText: string;
+  height: string;
+  color: string;
+  radioName: string;
   delete: boolean;
   id: string;
 }

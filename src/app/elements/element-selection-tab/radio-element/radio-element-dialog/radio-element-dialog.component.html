@@ -1,17 +1,22 @@
 <div><h1 mat-dialog-title>Edit Input Field</h1>
     <label>Label </label>
     <input matInput [(ngModel)]="label" value=""><br>
+    <label>Name </label>
+    <input matInput [(ngModel)]="radioName" value=""><br>
     <button (click)="addRadioButton()">Add option </button>
 </div>
-<div *ngFor="let radioElement of radioElementValues; let i=index"> Option text
+<div *ngFor="let radioElement of radioElementValues; let i=index">
+    <label> Option text </label> 
     <input value="" [(ngModel)]="bufferRadioElementValues[i]">
-    <label> Id / Name </label>
+    <label> Id / For </label>
     <input value="" [(ngModel)]="bufferRadioElementIds[i]">
+    <label> Attribute Value </label>
+    <input value="" [(ngModel)]="bufferRadioElementAttributeValues[i]">
     <button *ngIf="radioElementValues.length > 2" (click)="removeRadioButton(i)"> REMOVE</button>
     <br>
 </div>
 <div mat-dialog-actions>
-    <button (click)="populateRadioElements()" [mat-dialog-close]="[label, radioElementValues]">Save</button>
+    <button (click)="populateRadioElements()" [mat-dialog-close]="[label, radioName, radioElementValues]">Save</button>
     <button [mat-dialog-close]="[]">Cancel</button>
 </div>
 
