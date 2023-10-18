@@ -6,3 +6,6 @@ button {
   margin-right: 5px;
 }
 
+.input-group .form-control {
+  z-index: 0;
+}

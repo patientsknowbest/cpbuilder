@@ -19,6 +19,8 @@ export class SelectElementDialogComponent {
   public id: string;
   public selectOptionValues: string[] = [];
   public bufferOptionValues: string[] = [];
+  public selectOptionAttributeValues: string[] = [];
+  public bufferOptionAttributeValues: string[] = [];
   private currentIndex:number;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
@@ -26,6 +28,8 @@ export class SelectElementDialogComponent {
     this.id = data.id;
     this.selectOptionValues = data.selectOptionValues;
     this.bufferOptionValues = [...this.selectOptionValues]
+    this.selectOptionAttributeValues = data.selectOptionAttributeValues;
+    this.bufferOptionAttributeValues = [...this.selectOptionAttributeValues]
     this.currentIndex = 0;
   }
 
@@ -33,16 +37,24 @@ export class SelectElementDialogComponent {
   for (let i = 0; i < this.bufferOptionValues.length; i++) {
     this.selectOptionValues[i] = this.bufferOptionValues[i]
   }
+  for (let i = 0; i < this.bufferOptionAttributeValues.length; i++) {
+    this.selectOptionAttributeValues[i] = this.bufferOptionAttributeValues[i]
+  }
 }
 
   addOption(){
     this.selectOptionValues.push('VALUE' + (this.selectOptionValues.length + 1));
+    this.selectOptionAttributeValues.push('ATTR_VALUE' + (this.selectOptionAttributeValues.length + 1));
   }
 
   removeOption(indexOfTheElement: number){
     if (this.selectOptionValues.length > 1) {
       this.selectOptionValues.splice(indexOfTheElement,1);
       this.bufferOptionValues.splice(indexOfTheElement, 1);
+    }
+    if (this.selectOptionAttributeValues.length > 1) {
+      this.selectOptionAttributeValues.splice(indexOfTheElement,1);
+      this.bufferOptionAttributeValues.splice(indexOfTheElement, 1);
     }
   }
 }

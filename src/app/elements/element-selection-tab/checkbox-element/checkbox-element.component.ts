@@ -19,6 +19,7 @@ export class CheckboxElementComponent implements ElementType {
   label: string = 'LABEL';
   checkBoxValues:string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
   checkBoxIds:string[] = ['ID1', 'ID2', 'ID3'];
+  checkBoxAttributeValues:string[] = ['ATTR_VALUE1', 'ATTR_VALUE2', 'ATTR_VALUE3'];
   htmlValue = this.generateHtml();
 
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
@@ -39,7 +40,7 @@ export class CheckboxElementComponent implements ElementType {
     if (!this.elementComponent.isDialogOpen) {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(CheckboxElementDialogComponent, {
-        data: {label: this.label, checkBoxValues: this.checkBoxValues, checkBoxIds: this.checkBoxIds},
+        data: {label: this.label, checkBoxValues: this.checkBoxValues, checkBoxIds: this.checkBoxIds, checkBoxAttributeValues: this.checkBoxAttributeValues},
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -62,8 +63,8 @@ export class CheckboxElementComponent implements ElementType {
     for (let i = 0; i < this.checkBoxValues.length; i++) {
       options += '                <div class="row">\n' + 
                  '                    <div class="form-check col-xs-12 pull-left">\n' + 
-                 '                        <input class="form-check-input form-control" type="checkbox" name="' + this.checkBoxIds[i] + '" id="' + this.checkBoxIds[i] + '" value="' + this.checkBoxValues[i] + '"/>\n' + 
-                 '                        <label class="cp_label col-xs-10 pull-right" for="' + this.checkBoxIds[i] + '">' + this.checkBoxValues[i] + '</label>\n' + 
+                 '                        <input class="form-check-input form-control" style="margin: 0; height: 20px;" type="checkbox" name="' + this.checkBoxIds[i] + '" id="' + this.checkBoxIds[i] + '" value="' + this.checkBoxAttributeValues[i] + '"/>\n' + 
+                 '                        <label class="cp_label col-xs-10 pull-right" style="margin-bottom: 0px;" for="' + this.checkBoxIds[i] + '">' + this.checkBoxValues[i] + '</label>\n' + 
                  '                    </div>\n' +
                  '                </div>\n';
     }    
