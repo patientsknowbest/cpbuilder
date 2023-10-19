@@ -1,13 +1,14 @@
-<div class="row cp-select-with-label" style="margin-top: 15px;">
+<div class="row cp-select-with-label" style="margin-top: 20px;">
   <div class="col-sm-6 input-group">
-    <label class="cp_label input-group" >{{label}}</label>
+    <label class="cp_label input-group" style="margin-bottom: 0px;">{{label}}</label>
   </div>
   <div class="col-sm-6 input-group" style="margin-top: 15px;">
     <select class="form-control input-group cp-select">
+      <option value="--">Select</option>
       <option *ngFor="let option of selectOptionValues; let i=index" value=>{{selectOptionValues[i]}}</option>
     </select>
   </div>
-  <button (click)="openDialog()">EDIT</button>
+  <button (click)="openDialog()" style="margin-top: 10px;">EDIT</button>
   <button (click)="removeElement()">REMOVE</button>
   <button (click)="elementComponent.moveDown(position, name)">MOVE DOWN</button>
   <button (click)="elementComponent.moveUp(position, name)">MOVE UP</button>

@@ -37,3 +37,7 @@
   background-color: #0064bd;
   box-shadow: none;
 }
+
+button {
+  margin-right: 5px;
+}

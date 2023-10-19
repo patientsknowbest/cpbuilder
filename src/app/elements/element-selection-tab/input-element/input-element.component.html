@@ -1,11 +1,11 @@
-<div class="row" style="margin-top: 15px;">
+<div class="row" style="margin-top: 20px;">
   <div class="col-sm-6 input-group">
-    <label class="cp-label cp-input-with-label">{{label}}</label></div>
-  <div class="col-sm-6 input-group" style="margin-top: 15px;">
-    <input type="text" class="form-control" style="width: 100%;" placeholder="{{placeholder}}" value=""/>
+    <label class="cp-label cp-input-with-label" style="margin-bottom: 0px;">{{label}}</label></div>
+  <div class="col-sm-6 input-group" style="margin-top: 10px;">
+    <input type="text" class="form-control" style="margin-bottom: 10px; width: 100%;" placeholder="{{placeholder}}" value=""/>
     <span>{{helpText}}</span>
   </div>
-  <button (click)="openDialog()">EDIT</button>
+  <button (click)="openDialog()" style="margin-top: 10px;">EDIT</button>
   <button (click)="removeElement()">REMOVE</button>
   <button (click)="elementComponent.moveDown(position, name)">MOVE DOWN</button>
   <button (click)="elementComponent.moveUp(position, name)">MOVE UP</button>

@@ -20,7 +20,7 @@ export class SeparatorElementComponent implements ElementType {
   @ViewChild('container', {read: ViewContainerRef}) container: ViewContainerRef;
   height: string = "3"
   color: string = "#000000"
-  separatorStyle: string = "height: "+ this.height +"px; background-color: "+ this.color +"; margin: 50px auto;width: 80%;";
+  separatorStyle: string = "height: "+ this.height +"px; background-color: "+ this.color +"; margin: 20px auto;width: 100%;";
   htmlValue = this.generateHtml();
 
   generateHtml() {
@@ -30,7 +30,7 @@ export class SeparatorElementComponent implements ElementType {
   constructor(public dialog: MatDialog, public elementComponent: ElementsComponent) {
     this.height = '3';
     this.color = "#000000";
-    this.separatorStyle = "height: "+ this.height +"px; background-color: " + this.color + "; margin: 50px auto;width: 80%;";
+    this.separatorStyle = "height: "+ this.height +"px; background-color: " + this.color + "; margin: 20px auto;width: 100%;";
   }
 
   close() {
@@ -58,7 +58,7 @@ export class SeparatorElementComponent implements ElementType {
           if (result[0] !== '') {
             this.height = result[0];
             this.color = result[1];
-            this.separatorStyle = "height: "+ result[0] +"px; background-color: "+ result[1] +"; margin: 50px auto;width: 80%;";
+            this.separatorStyle = "height: "+ result[0] +"px; background-color: "+ result[1] +"; margin: 20px auto;width: 100%;";
           }
 
           this.htmlValue = this.generateHtml();

@@ -19,7 +19,6 @@ export class RadioElementComponent implements ElementType {
   radioName: string = 'NAME';
   radioButtonValues: string[] = ['VALUE1', 'VALUE2', 'VALUE3'];
   radioButtonIds: string[] = ['ID1', 'ID2', 'ID3'];
-  radioButtonAttributeValues: string[] = ['ATTR_VALUE1', 'ATTR_VALUE2', 'ATTR_VALUE3'];
   htmlValue = this.generateHtml();
 
   generateHtml() {
@@ -37,7 +36,6 @@ export class RadioElementComponent implements ElementType {
     this.radioName = 'NAME';
     this.radioButtonValues = ['VALUE1', 'VALUE2', 'VALUE3'];
     this.radioButtonIds = ['ID1', 'ID2', 'ID3'];
-    this.radioButtonAttributeValues = ['ATTR_VALUE1', 'ATTR_VALUE2', 'ATTR_VALUE3'];
   }
 
   openDialog(): void {
@@ -45,8 +43,7 @@ export class RadioElementComponent implements ElementType {
       this.elementComponent.changeDialogState();
       const dialogRef = this.dialog.open(RadioElementDialogComponent, {
         data: {
-          label: this.label, radioName: this.radioName, inputValues: this.radioButtonValues, 
-          inputIds: this.radioButtonIds, inputAttributeValues: this.radioButtonAttributeValues
+          label: this.label, radioName: this.radioName, inputValues: this.radioButtonValues, inputIds: this.radioButtonIds,
         },
       });
 
@@ -75,7 +72,7 @@ export class RadioElementComponent implements ElementType {
     for (let i = 0; i < this.radioButtonValues.length; i++) {
       options += '                <div class="row">\n' +
                  '                    <div class="form-check">\n' +
-                 '                        <input class="form-check-input col-xs-1" type="radio" name="' + this.radioName + '" id="' + this.radioButtonIds[i] + '" value="'+ this.radioButtonAttributeValues[i] + '">\n' +
+                 '                        <input class="form-check-input col-xs-1" type="radio" name="' + this.radioName + '" id="' + this.radioButtonIds[i] + '" value="'+ this.radioButtonValues[i] + '">\n' +
                  '                            <label class="form-check-label col-xs-10" for="' + this.radioButtonIds[i] + '">' + this.radioButtonValues[i] + '</label>\n' +
                  '                        </input>\n' +
                  '                    </div>\n' +

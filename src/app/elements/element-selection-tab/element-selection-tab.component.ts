@@ -10,6 +10,7 @@ import {InputElementComponent} from "./input-element/input-element.component";
 })
 export class ElementSelectionTabComponent {
   textType: string;
+  paragraphType: string;
   inputType: string;
   selectType: string;
   radioType: string;
@@ -23,6 +24,7 @@ export class ElementSelectionTabComponent {
 
   constructor(public elementComponent: ElementsComponent) {
     this.textType = 'textElementComponent';
+    this.paragraphType = 'paragraphElementComponent';
     this.inputType = 'inputElementComponent';
     this.selectType = 'selectElementComponent';
     this.radioType = 'radioElementComponent';

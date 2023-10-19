@@ -1,0 +1,16 @@
+app-text-element{
+    background: black;
+  }
+  .row {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  
+  button {
+    margin-right: 5px;
+  }
+  
+  .input-group .form-control {
+    z-index: 0;
+  }
+  

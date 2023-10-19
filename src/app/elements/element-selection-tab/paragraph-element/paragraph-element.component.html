@@ -1,10 +1,9 @@
 <div class="row" style="margin-top: 20px;">
-    <div class="cp_video_element" style="margin: auto;">
-        <iframe class="cp_video-element-iframe" width="520" height="260" [src]="src" allowfullscreen></iframe>
+    <div class="col-sm-12 input-group" style="line-height: 7.5px;">
+      <p class="paragraph" style="margin-bottom: 0px; width: 100%;">{{paragraph}}</p><br>
     </div>
     <button (click)="openDialog()" style="margin-top: 10px;">EDIT</button>
     <button (click)="removeElement()">REMOVE</button>
     <button (click)="elementComponent.moveDown(position, name)">MOVE DOWN</button>
     <button (click)="elementComponent.moveUp(position, name)">MOVE UP</button>
-</div>
-
+  </div>

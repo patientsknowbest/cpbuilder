@@ -1,4 +1,4 @@
-<div class="row" style="margin-top: 15px;">
+<div class="row" style="margin-top: 20px;">
     <div>
         <img class="cp_image"
              [ngSrc]="src"
@@ -6,7 +6,7 @@
              width="100%"
              height="auto">
     </div>
-    <button (click)="openDialog()">EDIT</button>
+    <button (click)="openDialog()" style="margin-top: 10px;">EDIT</button>
     <button (click)="removeElement()">REMOVE</button>
     <button (click)="elementComponent.moveDown(position, name)">MOVE DOWN</button>
     <button (click)="elementComponent.moveUp(position, name)">MOVE UP</button>

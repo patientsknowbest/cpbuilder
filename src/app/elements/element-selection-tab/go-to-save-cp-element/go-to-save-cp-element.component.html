@@ -1,9 +1,10 @@
-<div class="row" style="margin-top: 15px;">
-    <div class="cp_go-to-save-cp-container">
+<div class="row" style="margin-top: 20px;">
         <button class="cp_go-to-save-cp-button"
-                alt="Click here to save the Care Plan" style="margin-top:15px; margin-bottom:15px;">Go to Save Care Plan</button>
-    </div>
-    <button (click)="removeElement()">REMOVE</button>
+                alt="Click here to save the Care Plan" 
+                style="margin-top:15px; margin-bottom:15px;">
+                Go to Save Care Plan
+        </button>
+    <button (click)="removeElement()" style="margin-left: 15px;">REMOVE</button>
     <button (click)="elementComponent.moveDown(position, name)">MOVE DOWN</button>
     <button (click)="elementComponent.moveUp(position, name)">MOVE UP</button>
 </div>

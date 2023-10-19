@@ -1,0 +1,9 @@
+<div>
+  <h1 mat-dialog-title>Edit Input Field</h1>
+  <label> Paragraph Content </label>
+  <input matInput [(ngModel)]="paragraph" value=""><br>
+  <div mat-dialog-actions>
+    <button [mat-dialog-close]="[paragraph]">Save</button>
+    <button [mat-dialog-close]="[]">Cancel</button>
+  </div>
+</div>

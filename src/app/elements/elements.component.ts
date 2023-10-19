@@ -13,6 +13,7 @@ import {VideoElementComponent} from "./element-selection-tab/video-element/video
 import {
   GoToSaveCpElementComponent
 } from "./element-selection-tab/go-to-save-cp-element/go-to-save-cp-element.component";
+import { ParagraphElementComponent } from './element-selection-tab/paragraph-element/paragraph-element.component';
 import {MatDialog} from "@angular/material/dialog";
 import { ClearEditorDialogComponent } from './clear-editor-dialog/clear-editor-dialog.component';
 
@@ -35,6 +36,7 @@ export class ElementsComponent implements OnInit {
 
   private componentTypes: any = {
     textType: 'textElementComponent',
+    paragraphType: 'paragraphElementComponent',
     inputType: 'inputElementComponent',
     selectType: 'selectElementComponent',
     radioType: 'radioElementComponent',
@@ -129,6 +131,10 @@ export class ElementsComponent implements OnInit {
     switch (type) {
       case this.componentTypes.textType: {
         actualType = TextElementComponent;
+        break;
+      }
+      case this.componentTypes.paragraphType: {
+        actualType = ParagraphElementComponent;
         break;
       }
       case this.componentTypes.inputType: {

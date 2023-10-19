@@ -3,16 +3,14 @@ import {InputElementComponent} from "../input-element.component";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 export interface DialogData {
   label: string;
+  paragraph: string;
   placeholder: string;
   helpText: string;
   selectOptionValues: string[]
-  selectOptionAttributeValues: string[]
   inputValues: string[]
   inputIds: string[]
-  inputAttributeValues: string[]
   checkBoxValues: string[]
   checkBoxIds: string[]
-  checkBoxAttributeValues: string[]
   src: string;
   altText: string;
   height: string;

@@ -14,16 +14,12 @@ export class CheckboxElementDialogComponent {
   public bufferCheckBoxValues: string[] = [];
   public checkBoxIds: string[] = [];
   public bufferCheckBoxIds: string[] = [];
-  public checkBoxAttributeValues: string[] = [];
-  public bufferCheckBoxAttributeValues: string[] = [];
   constructor(public dialogRef: MatDialogRef<CheckboxElementDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData,) {
     this.label = data.label;
     this.checkBoxValues = data.checkBoxValues;
     this.bufferCheckBoxValues = [...this.checkBoxValues];
     this.checkBoxIds = data.checkBoxIds;
     this.bufferCheckBoxIds = [...this.checkBoxIds];
-    this.checkBoxAttributeValues = data.checkBoxAttributeValues;
-    this.bufferCheckBoxAttributeValues = [...this.checkBoxAttributeValues];
   }
 
   populatingCheckBoxValues(){
@@ -33,15 +29,11 @@ export class CheckboxElementDialogComponent {
     for (let i = 0; i < this.bufferCheckBoxIds.length; i++) {
       this.checkBoxIds[i] = this.bufferCheckBoxIds[i]
     }
-    for (let i = 0; i < this.bufferCheckBoxAttributeValues.length; i++) {
-      this.checkBoxAttributeValues[i] = this.bufferCheckBoxAttributeValues[i]
-    }
   }
 
   addCheckbox(){
     this.checkBoxValues.push('VALUE' + (this.checkBoxValues.length + 1));
     this.checkBoxIds.push('ID' + (this.checkBoxIds.length + 1));
-    this.checkBoxAttributeValues.push('ATTR_VALUE' + (this.checkBoxAttributeValues.length + 1));
   }
 
   removeCheckbox(indexOfTheElement: number){
@@ -52,10 +44,6 @@ export class CheckboxElementDialogComponent {
     if (this.checkBoxIds.length > 1) {
       this.checkBoxIds.splice(indexOfTheElement,1);
       this.bufferCheckBoxIds.splice(indexOfTheElement, 1);
-    }
-    if (this.checkBoxAttributeValues.length > 1) {
-      this.checkBoxAttributeValues.splice(indexOfTheElement,1);
-      this.bufferCheckBoxAttributeValues.splice(indexOfTheElement, 1);
     }
   }
 }
